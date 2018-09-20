@@ -5,11 +5,13 @@
 
 This is an open-source project for my 'dream' DAW controller. There are several controllers and plugins on the market that do similar things - I wanted everything neatly integrated, so I came up with this design. The designs and code are free for personal use (not for commercial use).
 
-The system consists of a **hardware USB controller** built using the excellent Midibox platform, and a **VST plugin** that sits on your DAW master bus.
+The system consists of a hardware **USB controller** built using the excellent Midibox platform, and a **VST plugin** that sits on your DAW master bus.
 
 Currently, the system is designed for my DAW of choice which is **Cubase**, but it could easily be adapted to support Logic, Bitwig, or other DAWs.
 ## Features
+ - 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzU3NTE3NzA2LC0xNTIwMDYzN119
+eyJoaXN0b3J5IjpbMTU2NTk2MzgxMywzNTc1MTc3MDYsLTE1Mj
+AwNjM3XX0=
 -->
