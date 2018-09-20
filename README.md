@@ -16,7 +16,7 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - Switch between 4 sets of monitor speakers
  - Monitor level knob (ALPS endless encoder) with 16x RGB LED ring to show position
  - No analog electronics required - converters can be connected directly to monitors for cleanest signal path
- - Monitor Mute, Dim and Reference options (can set dim and reference levels in plugin)
+ - Monitor Mute, Dim and Reference options (dim and reference levels adjustable in plugin)
  - Mono mode, Side Band Solo, and 'Loud' mode (an inverted Fletcher-Munson EQ curve that sounds a bit like Yamaha NS10M monitors)
  - Low, Low-Mid, High-Mid and High frequency band solo (crossover points adjustable in plugin)
  - Channel strip controls: 100mm motorised ALPS fader, Mute, Solo, Automation Read and Write
@@ -74,7 +74,7 @@ The code is split into various modules. Code files and function names begin with
  # 
 Copyright © 2018 David Evans. Licensed for personal non-commercial use only. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU1NzMzMzIxOCw2MTIwOTE5NjYsMTc0NT
+eyJoaXN0b3J5IjpbLTQ5Mzc5NDYxMSw2MTIwOTE5NjYsMTc0NT
 AzMDEyOCwxMjIzODk5NDk4LDExOTQ2NDE3NTksMzQ2MjkxNDcs
 LTE3ODk4NDgwMzcsMzU3NTE3NzA2LC0xNTIwMDYzN119
 -->
