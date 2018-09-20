@@ -54,9 +54,9 @@ The hardware consists of
 TODO: Schematics and hardware build photos
 
 ## Firmware
-The MIDIBox Hardware Platform called MIOS32 runs on ARM-based processors LPC1769 from NXP and STM32F407 from ST Microelectronics. It is based on a [Real Time Operating System](https://en.wikipedia.org/wiki/Real_Time_Operating_System "Real Time Operating System") (RTOS) derived from [FreeRTOS](https://en.wikipedia.org/wiki/FreeRTOS "FreeRTOS"). The toolchain for MIOS32 is based on [GCC](https://en.wikipedia.org/wiki/GNU_Compiler_Collection "GNU Compiler Collection") and uses only C language.
+The MIDIBox Hardware Platform is called MIOS32 and runs on the STM32F407. It is based on a [Real Time Operating System](https://en.wikipedia.org/wiki/Real_Time_Operating_System "Real Time Operating System") (RTOS) derived from [FreeRTOS](https://en.wikipedia.org/wiki/FreeRTOS "FreeRTOS"). The toolchain for MIOS32 is based on [GCC](https://en.wikipedia.org/wiki/GNU_Compiler_Collection "GNU Compiler Collection") and uses the C language.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU2MzUwMTY4LDExOTQ2NDE3NTksMzQ2Mj
-kxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2LC0xNTIwMDYzN119
-
+eyJoaXN0b3J5IjpbLTMzNTIwODA5MSwxMTk0NjQxNzU5LDM0Nj
+I5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMDA2Mzdd
+fQ==
 -->
