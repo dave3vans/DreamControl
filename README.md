@@ -36,11 +36,12 @@ I had been wanting to make something using the Midibox platform for a while, and
 Another inspiration for the project was finding out that the high-end, expensive EAO brand clicky switches that I love (used for example on SSL consoles), are now also Made in China for under £1!
 ## Hardware
 The hardware consists of
- - STM32F407 Cortex-M4 microcontroller, on low cost evaluation board
+ - STM32F407 Cortex-M4 microcontroller, on [low cost evaluation board
+](https://www.st.com/en/evaluation-tools/stm32f4discovery.html)
  - Midibox boards:
-	 - MBHP_CORE_STM32F4 board
-	 - MF_NG motorfader board, based on PIC18F452
-	 - DOUT board for button LEDs
+	 - [MBHP_CORE_STM32F4](http://www.ucapps.de/mbhp_core_stm32f4.html) board
+	 - [MF_NG motorfader board](http://www.ucapps.de/mbhp_mf_ng.html), based on PIC18F452
+	 - [DOUT board](http://www.ucapps.de/mbhp_dout.html) for button LEDs
 	 - DIN board for buttons
  - 35x Square Illuminated Momentary push-buttons (model LAZ16-11)
  - Custom display boards:
@@ -51,7 +52,7 @@ The hardware consists of
  - 5V 1.5A / 12V 1.5A power supply (butchered from an old external hard drive enclosure)
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MDQ2Mzg4MzEsMTE5NDY0MTc1OSwzND
-YyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYsLTE1MjAwNjM3
-XX0=
+eyJoaXN0b3J5IjpbLTkyNjc1NjUwNywxMTk0NjQxNzU5LDM0Nj
+I5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMDA2Mzdd
+fQ==
 -->
