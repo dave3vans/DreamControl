@@ -5,16 +5,15 @@
 
 This is an open-source project for my 'dream' DAW controller. There are several controllers and plugins on the market that do similar things - I wanted everything neatly integrated, so I came up with this design. The designs and code are free for personal use (not for commercial use).
 
-When writing, mixing and mastering, I often switch between what I'm working on and reference material, and switch between several sets of speakers. I also want to hear the mix in mono, hear the side band solo'd, and also individual frequency bands. I also want easily readable True Peak and LUFS meters.
-
 The system consists of a hardware **USB control surface** built using the excellent [Midibox](http://www.ucapps.de/) platform, and a **VST plugin** that sits on your DAW master bus.
 
 Currently, the system is designed for my DAW of choice which is **Cubase**, and the plugin can be used with it's Control Room feature, but it could easily be adapted to support Logic, Bitwig, or other DAWs.
 
 ## Features
- - Switch between your mix and 6 different other sources.
- - Switch between 4 different sets of monitor speakers.
- - Monitor level knob (ALPS endless encoder) with 16x RGB LED ring to show position.
+ - Switch between your mix and 6 different other sources
+ - Switch between 4 different sets of monitor speakers
+ - Monitor level knob (ALPS endless encoder) with 16x RGB LED ring to show position
+ - No analog electronics required - converters can be connected directly to monitors for cleanest signal path
  - Monitor Mute, Dim and Reference options (can set dim and reference levels in plugin).
  - Mono mode, Side Band Solo, and 'Loud' mode (an inverted Fletcher-Munson EQ curve that sounds a bit like Yamaha NS10M monitors).
  - Low, Low-Mid, High-Mid and High frequency band solo (crossover points adjustable in plugin).
@@ -25,7 +24,9 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - Two different True Peak dB scales, two different LUFS scales (absolute and relative).
  - 128x64 pixel OLED display, showing various meter values - LUFS Integrated in large numbers, and smaller numbers showing True Peak Max L/R, LUFS Momentary Max, LUFS Target (can be set using plugin).
 - Monitor Level Knob can also be set to 'MIDI modulator mode' by pressing VOL/MOD, so instead of changing monitor level it can output MIDI CC messages.
+## Background
+When writing, mixing and mastering, I often switch between what I'm working on and reference material, and switch between several sets of speakers. I also want to hear the mix in mono, hear the side band solo'd, and also individual frequency bands. I also want easily readable True Peak and LUFS meters, and a physical fader and related channel strip and transport controls. And I don't want
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyMTM5MTIyNjksMzQ2MjkxNDcsLTE3OD
+eyJoaXN0b3J5IjpbLTEyMTEyOTExNjAsMzQ2MjkxNDcsLTE3OD
 k4NDgwMzcsMzU3NTE3NzA2LC0xNTIwMDYzN119
 -->
