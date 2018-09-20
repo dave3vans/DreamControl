@@ -12,7 +12,7 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - Switch between your mix and 6 different other sources.
  - Switch between 4 different sets of monitor speakers.
  - Monitor level knob (ALPS endless encoder) with 16x RGB LED ring to show position.
- - Monitor mute, dim and reference options (can set dim and reference levels in plugin).
+ - Monitor Mute, Dim and Reference options (can set dim and reference levels in plugin).
  - Mono mode, side band solo, and 'loud' mode (an inverted Fletcher-Munson EQ curve that sounds a bit like Yamaha NS10M monitors).
  - Low, low-mid, high-mid and high frequency band solo (crossover points adjustable in plugin).
  - Channel strip controls: 100mm motorised ALPS fader, Mute, Solo, Automation Read and Write.
@@ -23,6 +23,6 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - 128x64 pixel OLED display, showing various meter values - LUFS Integrated in large numbers, and smaller numbers showing True Peak Max L/R, LUFS Momentary Max, LUFS Target (can be set using plugin).
 - Monitor Level Knob can also be set to 'MIDI modulator mode' by pressing VOL/MOD, so instead of changing monitor level it can output MIDI CC messages.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3ODk4NDgwMzcsMzU3NTE3NzA2LC0xNT
-IwMDYzN119
+eyJoaXN0b3J5IjpbLTg2MzA3MzY2OSwtMTc4OTg0ODAzNywzNT
+c1MTc3MDYsLTE1MjAwNjM3XX0=
 -->
