@@ -56,9 +56,14 @@ TODO: Schematics and hardware build photos
 ## Firmware
 The MIDIBox Hardware Platform is called MIOS32 and runs on the STM32F407. It is based on a Real Time Operating System (RTOS) derived from FreeRTOS. The toolchain for MIOS32 is based on GCC and uses the C language.
 
-To build and flash the firmware, you'll need to obtain MIOS32 from the [SVN repository](http://svnmios.midibox.org/listing.php?repname=svn.mios32&path=/trunk/) and download the [MIOS Studio tool](http://www.ucapps.de/mios_studio.html) which allows you to flash a .
+To build and flash the firmware, you'll need to obtain:
+
+ - ST LINK utility from ST Microelectronics, which allows you to flash the MIOS32 bootloader into a virgin S
+ - MIOS32 from the [SVN repository](http://svnmios.midibox.org/listing.php?repname=svn.mios32&path=/trunk/) 
+ - [MIOS Studio tool](http://www.ucapps.de/mios_studio.html) which allows you to flash firmware
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIyMzg5OTQ5OCwxMTk0NjQxNzU5LDM0Nj
-I5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMDA2Mzdd
-fQ==
+eyJoaXN0b3J5IjpbLTc0NDc2NTU4NSwxMjIzODk5NDk4LDExOT
+Q2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2
+LC0xNTIwMDYzN119
 -->
