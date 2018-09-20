@@ -12,9 +12,11 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - Switch between your mix and 6 different other sources.
  - Switch between 4 different sets of monitor speakers.
  - Monitor level knob (ALPS endless encoder) with 16 RGB LED ring to show position.
+ - Monitor mute, dim and reference options (can set dim and reference levels in plugin).
+ - Mono mode, side band solo, and 'loud' mode (an inverted Fletcher-Munson EQ curve that sounds a bit like Yamaha NS10M monitors).
  - 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNDI5OTQ4OTEsMzU3NTE3NzA2LC0xNT
-IwMDYzN119
+eyJoaXN0b3J5IjpbNTMwMzIxNTkwLDM1NzUxNzcwNiwtMTUyMD
+A2MzddfQ==
 -->
