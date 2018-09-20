@@ -60,7 +60,7 @@ DreamControl is built on the excellent MIDIBox operating system, which is called
 
 To build and flash the firmware, you'll need to obtain:
 
- - The GCC toolchain. I'm on Windows so I use [MSYS](http://www.mingw.org/wiki/MSYS). I also highly recommend [Visual Studio Code](https://code.visualstudio.com/).
+ - The GCC toolchain. I'm on Windows so I use [MSYS](http://www.mingw.org/wiki/MSYS).
  - [MIOS32 Bootloader](http://www.ucapps.de/mios32_download.html), which allows you to quickly flash new firmware over USB MIDI.
  - [ST LINK utility](https://www.st.com/en/development-tools/st-link-v2.html) from ST Microelectronics, which allows you to flash the MIOS32 bootloader into a virgin STM32F4 (only needed once).
  - MIOS32 from the [SVN repository](http://svnmios.midibox.org/listing.php?repname=svn.mios32&path=/trunk/) 
@@ -74,7 +74,7 @@ The code is split into various modules. Code files and function names begin with
  # 
 Copyright © 2018 David Evans. Licensed for personal non-commercial use only. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2MjU2NjIxMTcsMTc0NTAzMDEyOCwxMj
-IzODk5NDk4LDExOTQ2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgw
-MzcsMzU3NTE3NzA2LC0xNTIwMDYzN119
+eyJoaXN0b3J5IjpbNjEyMDkxOTY2LDE3NDUwMzAxMjgsMTIyMz
+g5OTQ5OCwxMTk0NjQxNzU5LDM0NjI5MTQ3LC0xNzg5ODQ4MDM3
+LDM1NzUxNzcwNiwtMTUyMDA2MzddfQ==
 -->
