@@ -42,8 +42,8 @@ The hardware consists of
 	 - [MBHP_CORE_STM32F4](http://www.ucapps.de/mbhp_core_stm32f4.html) board
 	 - [MF_NG motorfader board](http://www.ucapps.de/mbhp_mf_ng.html), based on PIC18F452
 	 - [DOUT board](http://www.ucapps.de/mbhp_dout.html) for button LEDs
-	 - DIN board for buttons
- - 35x Square Illuminated Momentary push-buttons (model LAZ16-11)
+	 - [DIN board](http://www.ucapps.de/mbhp_din.html) for buttons
+ - 35x Square Illuminated Momentary push-buttons (model [LAZ16-11](https://www.ebay.co.uk/itm/Square-micro-button-LAZ16-11-self-lock-no-lamp-button-switch-3-foot-diameter16mm-/162438920326))
  - Custom display boards:
 	 - SSD1306 OLED display (128x64 pixels, SPI interface)
 	 - WS2812 RGB LED strip, cut to 15 LED sections for meters (144 LED per metre strip, unbranded from China)
@@ -52,7 +52,7 @@ The hardware consists of
  - 5V 1.5A / 12V 1.5A power supply (butchered from an old external hard drive enclosure)
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkyNjc1NjUwNywxMTk0NjQxNzU5LDM0Nj
+eyJoaXN0b3J5IjpbLTI2NTQzMjk2NCwxMTk0NjQxNzU5LDM0Nj
 I5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMDA2Mzdd
 fQ==
 -->
