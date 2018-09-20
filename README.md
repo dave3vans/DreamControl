@@ -40,7 +40,7 @@ Another inspiration for the project was finding out that the high-end, expensive
 The hardware consists of
  - STM32F407 Cortex-M4 microcontroller, on [low cost evaluation board
 ](https://www.st.com/en/evaluation-tools/stm32f4discovery.html), connected to PC via MIDI-over-USB.
- - Midibox boards:
+ - MIDIbox boards:
 	 - [MBHP_CORE_STM32F4](http://www.ucapps.de/mbhp_core_stm32f4.html) board
 	 - [MF_NG motorfader board](http://www.ucapps.de/mbhp_mf_ng.html), based on PIC18F452
 	 - [DOUT board](http://www.ucapps.de/mbhp_dout.html) for button LEDs
@@ -74,8 +74,8 @@ The code is split into various modules. Code files and function names begin with
  # 
 Copyright © 2018 David Evans. Licensed for personal non-commercial use only. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk1NDMxNzI0NSw1MTM1MzEzOTUsLTQ5Mz
-c5NDYxMSw2MTIwOTE5NjYsMTc0NTAzMDEyOCwxMjIzODk5NDk4
-LDExOTQ2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NT
-E3NzA2LC0xNTIwMDYzN119
+eyJoaXN0b3J5IjpbMTk1MDkwOTc5LDUxMzUzMTM5NSwtNDkzNz
+k0NjExLDYxMjA5MTk2NiwxNzQ1MDMwMTI4LDEyMjM4OTk0OTgs
+MTE5NDY0MTc1OSwzNDYyOTE0NywtMTc4OTg0ODAzNywzNTc1MT
+c3MDYsLTE1MjAwNjM3XX0=
 -->
