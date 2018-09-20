@@ -14,19 +14,23 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - Switch between 4 different sets of monitor speakers
  - Monitor level knob (ALPS endless encoder) with 16x RGB LED ring to show position
  - No analog electronics required - converters can be connected directly to monitors for cleanest signal path
- - Monitor Mute, Dim and Reference options (can set dim and reference levels in plugin).
- - Mono mode, Side Band Solo, and 'Loud' mode (an inverted Fletcher-Munson EQ curve that sounds a bit like Yamaha NS10M monitors).
- - Low, Low-Mid, High-Mid and High frequency band solo (crossover points adjustable in plugin).
- - Channel strip controls: 100mm motorised ALPS fader, Mute, Solo, Automation Read and Write.
+ - Monitor Mute, Dim and Reference options (can set dim and reference levels in plugin)
+ - Mono mode, Side Band Solo, and 'Loud' mode (an inverted Fletcher-Munson EQ curve that sounds a bit like Yamaha NS10M monitors)
+ - Low, Low-Mid, High-Mid and High frequency band solo (crossover points adjustable in plugin)
+ - Channel strip controls: 100mm motorised ALPS fader, Mute, Solo, Automation Read and Write
  - Talk Back (for Cubase Control Room)
- - Standard transport controls: Play, Stop, Click, Record, Return, Loop, Backwards, Forwards. These can be assigned using the plugin, e.g. to DAW macros.
- - Three 15x RGB LED level meters, that can show True Peak or LUFS (EBU R128 / ITU 1770 standard), or a combination (e.g. True Peak + LUFS Momentary).
- - Two different True Peak dB scales, two different LUFS scales (absolute and relative).
- - 128x64 pixel OLED display, showing various meter values - LUFS Integrated in large numbers, and smaller numbers showing True Peak Max L/R, LUFS Momentary Max, LUFS Target (can be set using plugin).
-- Monitor Level Knob can also be set to 'MIDI modulator mode' by pressing VOL/MOD, so instead of changing monitor level it can output MIDI CC messages.
+ - Standard transport controls: Play, Stop, Click, Record, Return, Loop, Backwards, Forwards. These can be assigned using the plugin, e.g. to DAW macros
+ - Three 15x RGB LED level meters, that can show True Peak or LUFS (EBU R128 / ITU 1770 standard), or a combination (e.g. True Peak + LUFS Momentary)
+ - Two different True Peak dB scales, two different LUFS scales (absolute and relative)
+ - 128x64 pixel OLED display, showing various meter values - LUFS Integrated in large numbers, and smaller numbers showing True Peak Max L/R, LUFS Momentary Max, LUFS Target (can be set using plugin)
+- Monitor Level Knob can also be set to 'MIDI modulator mode' by pressing VOL/MOD, so instead of changing monitor level it can output MIDI CC messages
 ## Background
-When writing, mixing and mastering, I often switch between what I'm working on and reference material, and switch between several sets of speakers. I also want to hear the mix in mono, hear the side band solo'd, and also individual frequency bands. I also want easily readable True Peak and LUFS meters, and a physical fader and related channel strip and transport controls. And I don't want
+When writing, mixing and mastering, I often switch between what I'm working on and reference material, and switch between several sets of speakers. I also want to hear the mix in mono, hear the side band solo'd, and also individual frequency bands. I also want easily readable True Peak and LUFS meters, and a physical motorised fader and related channel strip and transport controls.
+
+And I don't want to have to look at a touchscreen or regular display to do this, leaving those free for other tasks.
+
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyMTEyOTExNjAsMzQ2MjkxNDcsLTE3OD
-k4NDgwMzcsMzU3NTE3NzA2LC0xNTIwMDYzN119
+eyJoaXN0b3J5IjpbLTE3OTU4NzA0MSwzNDYyOTE0NywtMTc4OT
+g0ODAzNywzNTc1MTc3MDYsLTE1MjAwNjM3XX0=
 -->
