@@ -37,7 +37,7 @@ Another inspiration for the project was finding out that the high-end, expensive
 ## Hardware
 The hardware consists of
  - STM32F407 Cortex-M4 microcontroller, on [low cost evaluation board
-](https://www.st.com/en/evaluation-tools/stm32f4discovery.html), connected to PC via USB MD
+](https://www.st.com/en/evaluation-tools/stm32f4discovery.html), connected to PC via MIDI-over-USB.
  - Midibox boards:
 	 - [MBHP_CORE_STM32F4](http://www.ucapps.de/mbhp_core_stm32f4.html) board
 	 - [MF_NG motorfader board](http://www.ucapps.de/mbhp_mf_ng.html), based on PIC18F452
@@ -65,7 +65,7 @@ To build and flash the firmware, you'll need to obtain:
  - [MIOS Studio tool](http://www.ucapps.de/mios_studio.html) which is a Windows/Mac app for flashing new firmware, viewing MIDI data, and sending and receiving debugging information via MIDI, as well as calibrating the motorfader (MF) board.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg5MDA4NTUyOCwxMjIzODk5NDk4LDExOT
-Q2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2
-LC0xNTIwMDYzN119
+eyJoaXN0b3J5IjpbLTc4MDE2MjY4LDEyMjM4OTk0OTgsMTE5ND
+Y0MTc1OSwzNDYyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYs
+LTE1MjAwNjM3XX0=
 -->
