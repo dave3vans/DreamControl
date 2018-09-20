@@ -7,7 +7,7 @@
 
 This is an open-source project for my 'dream' DAW controller. There are several controllers and plugins on the market that do similar things - I wanted everything neatly integrated, so I came up with this design. The designs and code are free for personal use (not for commercial use).
 
-The system consists of a hardware **USB control surface** built using the excellent [MIDIbox](http://www.ucapps.de/) platform, and a **VST plugin** that sits on your DAW master bus or Cubase's 'Control Room'.
+The system consists of a hardware **USB control surface** built using the excellent [MIDIbox](http://www.ucapps.de/) platform, and a **VST plugin** that works with Cubase's 'Control Room'.
 
 Currently, the system is designed for my DAW of choice which is **Cubase**, and the plugin can be used with it's Control Room feature, but it could easily be adapted to support Logic, Bitwig, or other DAWs.
 
@@ -74,7 +74,7 @@ The code is split into various modules. Code files and function names begin with
  # 
 Copyright © 2018 David Evans. Licensed for personal non-commercial use only. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM0NzIzODQ0MSwtNDkzNzk0NjExLDYxMj
+eyJoaXN0b3J5IjpbMTAxMDY1NTQ5NywtNDkzNzk0NjExLDYxMj
 A5MTk2NiwxNzQ1MDMwMTI4LDEyMjM4OTk0OTgsMTE5NDY0MTc1
 OSwzNDYyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYsLTE1Mj
 AwNjM3XX0=
