@@ -42,15 +42,16 @@ The hardware consists of
 	 - MF_NG motorfader board, based on PIC18F452
 	 - DOUT board for button LEDs
 	 - DIN board for buttons
+ - 35x Square Illuminated Momentary push-buttons (model LAZ16-11)
  - Custom display boards:
 	 - SSD1306 OLED display (128x64 pixels, SPI interface)
 	 - WS2812 RGB LED strip, cut to 15 LED sections for meters (144 LED per metre strip, unbranded from China)
 	 - WS2812 RGB LED ring (NeoPixel brand)
  - ALPS 100mm motorised fader (RSA0N11M9A0K)
- - 5V 1.5A / 12V 1
+ - 5V 1.5A / 12V 1.5A power supply (butchered from an old external hard drive enclosure)
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDk4NjI4NDk5LDExOTQ2NDE3NTksMzQ2Mj
-kxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2LC0xNTIwMDYzN119
-
+eyJoaXN0b3J5IjpbLTE1MDQ2Mzg4MzEsMTE5NDY0MTc1OSwzND
+YyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYsLTE1MjAwNjM3
+XX0=
 -->
