@@ -64,9 +64,12 @@ To build and flash the firmware, you'll need to obtain:
  - MIOS32 from the [SVN repository](http://svnmios.midibox.org/listing.php?repname=svn.mios32&path=/trunk/) 
  - [MIOS Studio](http://www.ucapps.de/mios_studio.html) which is a Windows/Mac app for flashing new firmware, viewing MIDI data, and sending and receiving debugging information via MIDI, as well as calibrating the motorfader (MF) board.
 
-The code is split into various modules, which begin with the prefix DC_.
+The code is split into various modules. Code files and function names begin with the prefix `DC_`, except MIOS32 hooks which begin `APP_`.
+
+
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU1ODM2MTE1LDEyMjM4OTk0OTgsMTE5ND
+eyJoaXN0b3J5IjpbMzM2NzcxNDg5LDEyMjM4OTk0OTgsMTE5ND
 Y0MTc1OSwzNDYyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYs
 LTE1MjAwNjM3XX0=
 -->
