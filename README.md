@@ -11,16 +11,18 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
 ## Features
  - Switch between your mix and 6 different other sources.
  - Switch between 4 different sets of monitor speakers.
- - Monitor level knob (ALPS endless encoder) with 16 RGB LED ring to show position.
+ - Monitor level knob (ALPS endless encoder) with 16x RGB LED ring to show position.
  - Monitor mute, dim and reference options (can set dim and reference levels in plugin).
  - Mono mode, side band solo, and 'loud' mode (an inverted Fletcher-Munson EQ curve that sounds a bit like Yamaha NS10M monitors).
  - Low, low-mid, high-mid and high frequency band solo (crossover points adjustable in plugin).
  - Channel strip controls: 100mm motorised ALPS fader, Mute, Solo, Automation Read and Write.
  - Talk Back (for Cubase Control Room)
  - Standard transport controls: Play, Stop, Click, Record, Return, Loop, Backwards, Forwards. These can be assigned using the plugin, e.g. to DAW macros.
- - Three 15 RGB LED level meters, that can sho
+ - Three 15x RGB LED level meters, that can show True Peak or LUFS (EBU R128 / ITU 1770 standard).
+ - Two different True Peak dB scales, two different LUFS scales (absolute and relative).
+ - 128x64 pixel OLED display, showing various me
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTA5MTkzNDgzLDM1NzUxNzcwNiwtMTUyMD
-A2MzddfQ==
+eyJoaXN0b3J5IjpbMTQ1MTQ0MTU4MCwzNTc1MTc3MDYsLTE1Mj
+AwNjM3XX0=
 -->
