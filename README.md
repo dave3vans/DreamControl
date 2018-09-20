@@ -36,11 +36,13 @@ I had been wanting to make something using the Midibox platform for a while, and
 Another inspiration for the project was finding out that the high-end, expensive EAO brand clicky switches that I love (used for example on SSL consoles), are now also Made in China for under £1!
 ## Hardware
 The hardware consists of
- - STM32F407 Cortex-M4 microcontroller, on STM32F407G-DISC1
+ - STM32F407 Cortex-M4 microcontroller, on low cost evaluation board
+ - Midibox MBHP_CORE_STM32F4 board
+ - Midibox MF_NG motorfader board, based on PIC18F42
  - 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIzMTUyMzczLDExOTQ2NDE3NTksMzQ2Mj
+eyJoaXN0b3J5IjpbODc2ODg1MDI0LDExOTQ2NDE3NTksMzQ2Mj
 kxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2LC0xNTIwMDYzN119
 
 -->
