@@ -20,9 +20,9 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - Standard transport controls: Play, Stop, Click, Record, Return, Loop, Backwards, Forwards. These can be assigned using the plugin, e.g. to DAW macros.
  - Three 15x RGB LED level meters, that can show True Peak or LUFS (EBU R128 / ITU 1770 standard).
  - Two different True Peak dB scales, two different LUFS scales (absolute and relative).
- - 128x64 pixel OLED display, showing various me
-
+ - 128x64 pixel OLED display, showing various meter values - LUFS Integrated in large numbers, and smaller numbers showing True Peak Max L/R, LUFS Momentary Max, LUFS Target (can be set using plugin).
+- Monitor Level Knob can also be set to 'MIDI controller mode' by pressing VOL/MOD, so instead of changing monitor level is c
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQ1MTQ0MTU4MCwzNTc1MTc3MDYsLTE1Mj
-AwNjM3XX0=
+eyJoaXN0b3J5IjpbLTIxMzE5NDk0NTAsMzU3NTE3NzA2LC0xNT
+IwMDYzN119
 -->
