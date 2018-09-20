@@ -37,7 +37,7 @@ Another inspiration for the project was finding out that the high-end, expensive
 ## Hardware
 The hardware consists of
  - STM32F407 Cortex-M4 microcontroller, on [low cost evaluation board
-](https://www.st.com/en/evaluation-tools/stm32f4discovery.html)
+](https://www.st.com/en/evaluation-tools/stm32f4discovery.html), connected to PC via USB MD
  - Midibox boards:
 	 - [MBHP_CORE_STM32F4](http://www.ucapps.de/mbhp_core_stm32f4.html) board
 	 - [MF_NG motorfader board](http://www.ucapps.de/mbhp_mf_ng.html), based on PIC18F452
@@ -58,14 +58,14 @@ DreamControl is built on the excellent MIDIBox Hardware Platform operating syste
 
 To build and flash the firmware, you'll need to obtain:
 
- - The GCC toolchain
+ - The GCC toolchain. I'm on Windows and I use [MSYS](http://www.mingw.org/wiki/MSYS).
  - [MIOS32 Bootloader](http://www.ucapps.de/mios32_download.html), which allows you to quickly flash new firmware over USB MIDI.
  - [ST LINK utility](https://www.st.com/en/development-tools/st-link-v2.html) from ST Microelectronics, which allows you to flash the MIOS32 bootloader into a virgin STM32F4.
  - MIOS32 from the [SVN repository](http://svnmios.midibox.org/listing.php?repname=svn.mios32&path=/trunk/) 
  - [MIOS Studio tool](http://www.ucapps.de/mios_studio.html) which is a Windows/Mac app for flashing new firmware, viewing MIDI data, and sending and receiving debugging information via MIDI, as well as calibrating the motorfader (MF) board.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTczMzk1NDY1MCwxMjIzODk5NDk4LDExOT
+eyJoaXN0b3J5IjpbMTg5MDA4NTUyOCwxMjIzODk5NDk4LDExOT
 Q2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2
 LC0xNTIwMDYzN119
 -->
