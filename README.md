@@ -18,11 +18,11 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - Channel strip controls: 100mm motorised ALPS fader, Mute, Solo, Automation Read and Write.
  - Talk Back (for Cubase Control Room)
  - Standard transport controls: Play, Stop, Click, Record, Return, Loop, Backwards, Forwards. These can be assigned using the plugin, e.g. to DAW macros.
- - Three 15x RGB LED level meters, that can show True Peak or LUFS (EBU R128 / ITU 1770 standard).
+ - Three 15x RGB LED level meters, that can show True Peak or LUFS (EBU R128 / ITU 1770 standard), or a combination (e.g. True Peak + LUFS Momentary).
  - Two different True Peak dB scales, two different LUFS scales (absolute and relative).
  - 128x64 pixel OLED display, showing various meter values - LUFS Integrated in large numbers, and smaller numbers showing True Peak Max L/R, LUFS Momentary Max, LUFS Target (can be set using plugin).
-- Monitor Level Knob can also be set to 'MIDI controller mode' by pressing VOL/MOD, so instead of changing monitor level is c
+- Monitor Level Knob can also be set to 'MIDI modulator mode' by pressing VOL/MOD, so instead of changing monitor level it can output MIDI CC messages.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIxMzE5NDk0NTAsMzU3NTE3NzA2LC0xNT
-IwMDYzN119
+eyJoaXN0b3J5IjpbLTUxMjE5ODk4MSwzNTc1MTc3MDYsLTE1Mj
+AwNjM3XX0=
 -->
