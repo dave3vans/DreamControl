@@ -12,8 +12,8 @@ The system consists of a hardware **USB control surface** built using the excell
 Currently, the system is designed for my DAW of choice which is **Cubase**, and the plugin can be used with it's Control Room feature, but it could easily be adapted to support Logic, Bitwig, or other DAWs.
 
 ## Features
- - Switch between your mix and 6 different other sources
- - Switch between 4 different sets of monitor speakers
+ - Switch between your mix and 6 other sources
+ - Switch between 4 sets of monitor speakers
  - Monitor level knob (ALPS endless encoder) with 16x RGB LED ring to show position
  - No analog electronics required - converters can be connected directly to monitors for cleanest signal path
  - Monitor Mute, Dim and Reference options (can set dim and reference levels in plugin)
@@ -74,7 +74,7 @@ The code is split into various modules. Code files and function names begin with
  # 
 Copyright © 2018 David Evans. Licensed for personal non-commercial use only. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjEyMDkxOTY2LDE3NDUwMzAxMjgsMTIyMz
-g5OTQ5OCwxMTk0NjQxNzU5LDM0NjI5MTQ3LC0xNzg5ODQ4MDM3
-LDM1NzUxNzcwNiwtMTUyMDA2MzddfQ==
+eyJoaXN0b3J5IjpbLTU1NzMzMzIxOCw2MTIwOTE5NjYsMTc0NT
+AzMDEyOCwxMjIzODk5NDk4LDExOTQ2NDE3NTksMzQ2MjkxNDcs
+LTE3ODk4NDgwMzcsMzU3NTE3NzA2LC0xNTIwMDYzN119
 -->
