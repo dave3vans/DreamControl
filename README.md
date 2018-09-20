@@ -37,12 +37,15 @@ Another inspiration for the project was finding out that the high-end, expensive
 ## Hardware
 The hardware consists of
  - STM32F407 Cortex-M4 microcontroller, on low cost evaluation board
- - Midibox MBHP_CORE_STM32F4 board
- - Midibox MF_NG motorfader board, based on PIC18F42
- - 
+ - Midibox boards:
+	 - MBHP_CORE_STM32F4 board
+	 - MF_NG motorfader board, based on PIC18F452
+	 - DOUT board for button LEDs
+	 - DIN board for buttons
+ - Custom display board:
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODc2ODg1MDI0LDExOTQ2NDE3NTksMzQ2Mj
-kxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2LC0xNTIwMDYzN119
-
+eyJoaXN0b3J5IjpbMTIxMDk2MTIyMCwxMTk0NjQxNzU5LDM0Nj
+I5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMDA2Mzdd
+fQ==
 -->
