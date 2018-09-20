@@ -8,6 +8,7 @@ This is an open-source project for my 'dream' DAW controller. There are several 
 The system consists of a hardware **USB control surface** built using the excellent [Midibox](http://www.ucapps.de/) platform, and a **VST plugin** that sits on your DAW master bus.
 
 Currently, the system is designed for my DAW of choice which is **Cubase**, and the plugin can be used with it's Control Room feature, but it could easily be adapted to support Logic, Bitwig, or other DAWs.
+
 ## Features
  - Switch between your mix and 6 different other sources.
  - Switch between 4 different sets of monitor speakers.
@@ -23,6 +24,6 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - 128x64 pixel OLED display, showing various meter values - LUFS Integrated in large numbers, and smaller numbers showing True Peak Max L/R, LUFS Momentary Max, LUFS Target (can be set using plugin).
 - Monitor Level Knob can also be set to 'MIDI modulator mode' by pressing VOL/MOD, so instead of changing monitor level it can output MIDI CC messages.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NT
-E3NzA2LC0xNTIwMDYzN119
+eyJoaXN0b3J5IjpbNDUwNDY1NTE3LDM0NjI5MTQ3LC0xNzg5OD
+Q4MDM3LDM1NzUxNzcwNiwtMTUyMDA2MzddfQ==
 -->
