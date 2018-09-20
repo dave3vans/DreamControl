@@ -55,8 +55,10 @@ TODO: Schematics and hardware build photos
 
 ## Firmware
 The MIDIBox Hardware Platform is called MIOS32 and runs on the STM32F407. It is based on a [Real Time Operating System](https://en.wikipedia.org/wiki/Real_Time_Operating_System "Real Time Operating System") (RTOS) derived from [FreeRTOS](https://en.wikipedia.org/wiki/FreeRTOS "FreeRTOS"). The toolchain for MIOS32 is based on [GCC](https://en.wikipedia.org/wiki/GNU_Compiler_Collection "GNU Compiler Collection") and uses the C language.
+
+To build and flash the firmware, you'll need to download MIOS32 and the MIOS Studio tool.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTMzNTIwODA5MSwxMTk0NjQxNzU5LDM0Nj
-I5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMDA2Mzdd
-fQ==
+eyJoaXN0b3J5IjpbLTE0MDkyMDY2MTEsMTE5NDY0MTc1OSwzND
+YyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYsLTE1MjAwNjM3
+XX0=
 -->
