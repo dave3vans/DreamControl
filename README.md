@@ -1,5 +1,8 @@
 # DreamControl
-![DreamControl Front Panel](https://imgur.com/a/rbmHKbH)
+
+![DreamControl Front Panel](https://i.imgur.com/ogYC02I.png)
+
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDg1NzY2NTg3LC0xNTIwMDYzN119
+eyJoaXN0b3J5IjpbMTYyMDQwNjE4NCwtMTUyMDA2MzddfQ==
 -->
