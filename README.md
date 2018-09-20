@@ -33,7 +33,7 @@ And I want these controls to be tactile, physical controls. And I don't want to 
 
 So the DreamControl was born!
 
-I had been wanting to make something using the Midibox platform for a while, and this was a good excuse. The hardware build itself is a little complex, but could be optimised considerably, and in future I may look at designing a custom PCB. For the prototype, I used 'off the shelf' PCBs from the Midibox project, which were quick to put together and worked well. It only just fitted inside the enclosure I had chosen, again in future this could be optimised.
+I had been wanting to make something using the MIDIbox platform for a while, and this was a good excuse. The hardware build itself is a little complex, but could be optimised considerably, and in future I may look at designing a custom PCB. For the prototype, I used 'off the shelf' PCBs from the Midibox project, which were quick to put together and worked well. It only just fitted inside the enclosure I had chosen, again in future this could be optimised.
 
 Another inspiration for the project was finding out that the high-end, expensive EAO brand clicky switches that I love (used for example on SSL consoles), are now also Made in China for under £1!
 ## Hardware
@@ -74,8 +74,8 @@ The code is split into various modules. Code files and function names begin with
  # 
 Copyright © 2018 David Evans. Licensed for personal non-commercial use only. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTEzNTMxMzk1LC00OTM3OTQ2MTEsNjEyMD
-kxOTY2LDE3NDUwMzAxMjgsMTIyMzg5OTQ5OCwxMTk0NjQxNzU5
-LDM0NjI5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMD
-A2MzddfQ==
+eyJoaXN0b3J5IjpbLTI0OTA3ODIzNyw1MTM1MzEzOTUsLTQ5Mz
+c5NDYxMSw2MTIwOTE5NjYsMTc0NTAzMDEyOCwxMjIzODk5NDk4
+LDExOTQ2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NT
+E3NzA2LC0xNTIwMDYzN119
 -->
