@@ -68,10 +68,13 @@ To build and flash the firmware, you'll need to obtain:
 
 The code is split into various modules. Code files and function names begin with the prefix `DC_`, except MIOS32 hooks which begin `APP_`.
 
-
-
+ 
+ 
+   
+ 
+Copyright © 2018 David Evans. Licensed for personal non-commercial use only. All other rights reserved.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg1MDI2NzkwMSwxMjIzODk5NDk4LDExOT
-Q2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2
-LC0xNTIwMDYzN119
+eyJoaXN0b3J5IjpbMzg0NDkxODgwLDEyMjM4OTk0OTgsMTE5ND
+Y0MTc1OSwzNDYyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYs
+LTE1MjAwNjM3XX0=
 -->
