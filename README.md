@@ -54,18 +54,19 @@ The hardware consists of
 TODO: Schematics and hardware build photos
 
 ## Firmware
-DreamControl is built on the excellent MIDIBox Hardware Platform operating system, which is called MIOS32 and runs on the STM32F407. It is based on a Real Time Operating System derived from FreeRTOS. The toolchain for MIOS32 is based on GCC and uses the C language.
+DreamControl is built on the excellent MIDIBox operating system, which is called MIOS32 and runs on the STM32F407. It is based on a Real Time Operating System derived from FreeRTOS. The toolchain for MIOS32 is based on GCC and uses the C language.
 
 To build and flash the firmware, you'll need to obtain:
 
  - The GCC toolchain. I'm on Windows and I use [MSYS](http://www.mingw.org/wiki/MSYS).
  - [MIOS32 Bootloader](http://www.ucapps.de/mios32_download.html), which allows you to quickly flash new firmware over USB MIDI.
- - [ST LINK utility](https://www.st.com/en/development-tools/st-link-v2.html) from ST Microelectronics, which allows you to flash the MIOS32 bootloader into a virgin STM32F4.
+ - [ST LINK utility](https://www.st.com/en/development-tools/st-link-v2.html) from ST Microelectronics, which allows you to flash the MIOS32 bootloader into a virgin STM32F4 (only needed once).
  - MIOS32 from the [SVN repository](http://svnmios.midibox.org/listing.php?repname=svn.mios32&path=/trunk/) 
- - [MIOS Studio tool](http://www.ucapps.de/mios_studio.html) which is a Windows/Mac app for flashing new firmware, viewing MIDI data, and sending and receiving debugging information via MIDI, as well as calibrating the motorfader (MF) board.
+ - [MIOS Studio](http://www.ucapps.de/mios_studio.html) which is a Windows/Mac app for flashing new firmware, viewing MIDI data, and sending and receiving debugging information via MIDI, as well as calibrating the motorfader (MF) board.
 
+The code is split into various modules, which begin with the prefix DC_.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTc4MDE2MjY4LDEyMjM4OTk0OTgsMTE5ND
+eyJoaXN0b3J5IjpbMTU1ODM2MTE1LDEyMjM4OTk0OTgsMTE5ND
 Y0MTc1OSwzNDYyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYs
 LTE1MjAwNjM3XX0=
 -->
