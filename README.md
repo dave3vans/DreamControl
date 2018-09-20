@@ -48,11 +48,12 @@ The hardware consists of
 	 - SSD1306 [OLED display](https://www.amazon.co.uk/SSD1306-128x64-Display-Module-Electronics/dp/B00KCM9JMG) (128x64 pixels, SPI interface)
 	 - WS2812 RGB LED strip, cut to 15 LED sections for meters ([NeoPixel brand](https://www.adafruit.com/product/1507), 144 LED per metre strip)
 	 - WS2812 RGB LED ring ([NeoPixel brand](https://www.adafruit.com/product/1463))
- - ALPS 100mm motorised fader (RSA0N11M9A0K)
+ - ALPS 100mm motorised fader ([RSA0N11M9A0K](https://www.reichelt.com/de/en/alps-rsa0n-studio-fader-motor-and-touch-sense-10k-rsa0n11m9-lin10k-p73884.html?ARTICLE=73884&&r=1))
  - 5V 1.5A / 12V 1.5A power supply (butchered from an old external hard drive enclosure)
 
+The STM32F4 has more than enough grunt for what we want to do now or in the future
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTMyMTk1NjA1NCwxMTk0NjQxNzU5LDM0Nj
-I5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMDA2Mzdd
-fQ==
+eyJoaXN0b3J5IjpbLTExOTQ4NDQyODgsMTE5NDY0MTc1OSwzND
+YyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYsLTE1MjAwNjM3
+XX0=
 -->
