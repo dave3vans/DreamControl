@@ -16,8 +16,11 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - Mono mode, side band solo, and 'loud' mode (an inverted Fletcher-Munson EQ curve that sounds a bit like Yamaha NS10M monitors).
  - Low, low-mid, high-mid and high frequency band solo (crossover points adjustable in plugin).
  - Channel strip controls: 100mm motorised ALPS fader, Mute, Solo, Automation Read and Write.
+ - Talk Back (for Cubase Control Room)
+ - Standard transport controls: Play, Stop, Click, Record, Return, Loop, Backwards, Forwards. These can be assigned using the plugin, e.g. to DAW macros.
+ - Three 15 RGB LED level meters, that can sho
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MTg4Nzc4NTQsMzU3NTE3NzA2LC0xNT
-IwMDYzN119
+eyJoaXN0b3J5IjpbOTA5MTkzNDgzLDM1NzUxNzcwNiwtMTUyMD
+A2MzddfQ==
 -->
