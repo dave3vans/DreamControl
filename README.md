@@ -71,10 +71,10 @@ The code is split into various modules. Code files and function names begin with
  
  
    
- # Licence
-Copyright © 2018 David Evans. Licensed for personal non-commercial use only. All other rights reserved. Plugin code is GPL (see code).
+ # 
+Copyright © 2018 David Evans. Licensed for personal non-commercial use only. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTc0NTAzMDEyOCwxMjIzODk5NDk4LDExOT
-Q2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2
-LC0xNTIwMDYzN119
+eyJoaXN0b3J5IjpbLTQ1OTg2NDE1LDE3NDUwMzAxMjgsMTIyMz
+g5OTQ5OCwxMTk0NjQxNzU5LDM0NjI5MTQ3LC0xNzg5ODQ4MDM3
+LDM1NzUxNzcwNiwtMTUyMDA2MzddfQ==
 -->
