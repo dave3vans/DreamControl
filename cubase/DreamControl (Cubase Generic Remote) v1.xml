@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remotedescription version="1.1">
+<ctrltable name="Standard MIDI">
+<ctrl><name>Channel Volume</name><stat>2</stat><chan>0</chan><addr>1</addr><max>16384</max><flags>3</flags></ctrl>
+</ctrltable>
+<bank name="VST 1-16">
+<entry ctrl="Channel Volume">
+<value><device>VST Mixer</device><chan>-2</chan><name>volume</name><flags>0</flags></value>
+</entry>
+</bank>
+<bank name="VST 17-32">
+</bank>
+<bank name="VST 33-48">
+</bank>
+<bank name="VST 49-64">
+<entry ctrl="Channel Volume">
+<value><device>VST Mixer</device><chan>-2</chan><name>volume</name><flags>0</flags></value>
+</entry>
+</bank>
+</remotedescription>
