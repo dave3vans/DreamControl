@@ -1,7 +1,7 @@
 #pragma once
 
 #include <functional>
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceLibraryCode/JuceHeader.h"
 
 class AudioParameterBoolNotify : public AudioParameterBool
 {

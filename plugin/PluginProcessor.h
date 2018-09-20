@@ -19,7 +19,7 @@
 #include <array>
 #include <map>
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceLibraryCode/JuceHeader.h"
 #include "AudioParameterBoolNotify.h"
 #include "LufsProcessor.h"
 #include "CrossoverFilter.h"

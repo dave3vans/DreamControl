@@ -31,7 +31,7 @@
 #define __PARAMETRICEQFILTER_H_6E48F605__
 
 #define _USE_MATH_DEFINES
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceLibraryCode/JuceHeader.h"
 
 //==============================================================================
 /**
