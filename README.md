@@ -51,9 +51,12 @@ The hardware consists of
  - ALPS 100mm motorised fader ([RSA0N11M9A0K](https://www.reichelt.com/de/en/alps-rsa0n-studio-fader-motor-and-touch-sense-10k-rsa0n11m9-lin10k-p73884.html?ARTICLE=73884&&r=1))
  - 5V 1.5A / 12V 1.5A power supply (butchered from an old external hard drive enclosure)
 
-The STM32F4 has more than enough grunt for what we want to do now or in the future
+TODO: Schematics and hardware build photos
+
+## Firmware
+The firmware is based on the excellent MIOS32 oper
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExOTQ4NDQyODgsMTE5NDY0MTc1OSwzND
-YyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYsLTE1MjAwNjM3
-XX0=
+eyJoaXN0b3J5IjpbLTU3NjI2MTYzMiwxMTk0NjQxNzU5LDM0Nj
+I5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMDA2Mzdd
+fQ==
 -->
