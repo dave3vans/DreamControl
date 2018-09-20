@@ -14,7 +14,7 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
 ## Features
  - Switch between your mix and 6 other sources
  - Switch between 4 sets of monitor speakers
- - Monitor level knob (ALPS endless encoder) with 16x RGB LED ring to show position. 48dB range in 1dB steps (3 brightness levels per LED).
+ - Monitor level knob (ALPS endless encoder) with 16x RGB LED ring to show position. 48dB range in 1dB steps (3 brightness levels per LED)
  - No analog electronics required - converters can be connected directly to monitors for cleanest signal path
  - Monitor Mute, Dim and Reference options (dim and reference levels adjustable in plugin)
  - Mono mode, Side Band Solo, and 'Loud' mode (an inverted Fletcher-Munson EQ curve that sounds a bit like Yamaha NS10M monitors)
@@ -74,8 +74,8 @@ The code is split into various modules. Code files and function names begin with
  # 
 Copyright © 2018 David Evans. Licensed for personal non-commercial use only. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwODcwMTE5NzksLTQ5Mzc5NDYxMSw2MT
-IwOTE5NjYsMTc0NTAzMDEyOCwxMjIzODk5NDk4LDExOTQ2NDE3
-NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2LC0xNT
-IwMDYzN119
+eyJoaXN0b3J5IjpbNTEzNTMxMzk1LC00OTM3OTQ2MTEsNjEyMD
+kxOTY2LDE3NDUwMzAxMjgsMTIyMzg5OTQ5OCwxMTk0NjQxNzU5
+LDM0NjI5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMD
+A2MzddfQ==
 -->
