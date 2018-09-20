@@ -31,11 +31,12 @@ And I want these controls to be tactile, physical controls. And I don't want to 
 
 So the DreamControl was born!
 
-I had been wanting to make something using the Midibox platform for a while, and this was a good excuse. The hardware build itself is reasonably complex, but the
+I had been wanting to make something using the Midibox platform for a while, and this was a good excuse. The hardware build itself is a little complex, but could be optimised considerably, and in future I may look at designing a custom PCB. For the prototype, I used 'off the shelf' PCBs from the Midibox project, which were quick to put together and worked well.
+
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0MTEwMDA1MTYsMTE5NDY0MTc1OSwzND
-YyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYsLTE1MjAwNjM3
-XX0=
+eyJoaXN0b3J5IjpbMTEzNTQ0OTc3MywxMTk0NjQxNzU5LDM0Nj
+I5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMDA2Mzdd
+fQ==
 -->
