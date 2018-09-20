@@ -14,9 +14,10 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - Monitor level knob (ALPS endless encoder) with 16 RGB LED ring to show position.
  - Monitor mute, dim and reference options (can set dim and reference levels in plugin).
  - Mono mode, side band solo, and 'loud' mode (an inverted Fletcher-Munson EQ curve that sounds a bit like Yamaha NS10M monitors).
- - 
+ - Low, low-mid, high-mid and high frequency band solo (crossover points adjustable in plugin).
+ - Channel strip controls: 100mm motorised ALPS fader, Mute, Solo, Automation Read and Write.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTMwMzIxNTkwLDM1NzUxNzcwNiwtMTUyMD
-A2MzddfQ==
+eyJoaXN0b3J5IjpbLTE1MTg4Nzc4NTQsMzU3NTE3NzA2LC0xNT
+IwMDYzN119
 -->
