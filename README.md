@@ -3,6 +3,7 @@
 
 ![DreamControl Front Panel](https://i.imgur.com/ogYC02I.png)
 
+**This is work in progress! This 
 This is an open-source project for my 'dream' DAW controller. There are several controllers and plugins on the market that do similar things - I wanted everything neatly integrated, so I came up with this design. The designs and code are free for personal use (not for commercial use).
 
 The system consists of a hardware **USB control surface** built using the excellent [MIDIbox](http://www.ucapps.de/) platform, and a **VST plugin** that sits on your DAW master bus.
@@ -69,7 +70,7 @@ The code is split into various modules. Code files and function names begin with
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzM2NzcxNDg5LDEyMjM4OTk0OTgsMTE5ND
-Y0MTc1OSwzNDYyOTE0NywtMTc4OTg0ODAzNywzNTc1MTc3MDYs
-LTE1MjAwNjM3XX0=
+eyJoaXN0b3J5IjpbMTM2Njk0NzI4NywxMjIzODk5NDk4LDExOT
+Q2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2
+LC0xNTIwMDYzN119
 -->
