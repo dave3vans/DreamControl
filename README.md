@@ -5,7 +5,7 @@
 
 This is an open-source project for my 'dream' DAW controller. There are several controllers and plugins on the market that do similar things - I wanted everything neatly integrated, so I came up with this design. The designs and code are free for personal use (not for commercial use).
 
-The system consists of a hardware **USB control surface** built using the excellent [Midibox](http://www.ucapps.de/) platform, and a **VST plugin** that sits on your DAW master bus.
+The system consists of a hardware **USB control surface** built using the excellent [MIDIbox](http://www.ucapps.de/) platform, and a **VST plugin** that sits on your DAW master bus.
 
 Currently, the system is designed for my DAW of choice which is **Cubase**, and the plugin can be used with it's Control Room feature, but it could easily be adapted to support Logic, Bitwig, or other DAWs.
 
@@ -54,9 +54,9 @@ The hardware consists of
 TODO: Schematics and hardware build photos
 
 ## Firmware
-The firmware is based on the excellent MIOS32 oper
+The MIDIBox Hardware Platform called MIOS32 runs on ARM-based processors LPC1769 from NXP and STM32F407 from ST Microelectronics. It is based on a [Real Time Operating System](https://en.wikipedia.org/wiki/Real_Time_Operating_System "Real Time Operating System") (RTOS) derived from [FreeRTOS](https://en.wikipedia.org/wiki/FreeRTOS "FreeRTOS"). The toolchain for MIOS32 is based on [GCC](https://en.wikipedia.org/wiki/GNU_Compiler_Collection "GNU Compiler Collection") and uses only C language.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU3NjI2MTYzMiwxMTk0NjQxNzU5LDM0Nj
-I5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwtMTUyMDA2Mzdd
-fQ==
+eyJoaXN0b3J5IjpbMTU2MzUwMTY4LDExOTQ2NDE3NTksMzQ2Mj
+kxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2LC0xNTIwMDYzN119
+
 -->
