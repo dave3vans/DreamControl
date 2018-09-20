@@ -3,7 +3,7 @@
 
 ![DreamControl Front Panel](https://i.imgur.com/ogYC02I.png)
 
-**This is work in progress! This README will be updated as I move ahead with the project. More detailed info (build photos etc) will go onto a blog at some point.**
+**WORK IN PROGRESS! This README will be updated as I move ahead with the project. More detailed info (build photos etc) will go onto a blog at some point.**
 
 This is an open-source project for my 'dream' DAW controller. There are several controllers and plugins on the market that do similar things - I wanted everything neatly integrated, so I came up with this design. The designs and code are free for personal use (not for commercial use).
 
@@ -71,7 +71,7 @@ The code is split into various modules. Code files and function names begin with
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODM2NDYxMjEsMTIyMzg5OTQ5OCwxMTk0Nj
-QxNzU5LDM0NjI5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcwNiwt
-MTUyMDA2MzddfQ==
+eyJoaXN0b3J5IjpbMTg1MDI2NzkwMSwxMjIzODk5NDk4LDExOT
+Q2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2
+LC0xNTIwMDYzN119
 -->
