@@ -54,16 +54,17 @@ The hardware consists of
 TODO: Schematics and hardware build photos
 
 ## Firmware
-The MIDIBox Hardware Platform is called MIOS32 and runs on the STM32F407. It is based on a Real Time Operating System (RTOS) derived from FreeRTOS. The toolchain for MIOS32 is based on GCC and uses the C language.
+DreamControl is built on the excellent MIDIBox Hardware Platform operating system, which is called MIOS32 and runs on the STM32F407. It is based on a Real Time Operating System (RTOS) derived from FreeRTOS. The toolchain for MIOS32 is based on GCC and uses the C language.
 
 To build and flash the firmware, you'll need to obtain:
 
- - ST LINK utility from ST Microelectronics, which allows you to flash the MIOS32 bootloader into a virgin S
+ - [MIOS32 Bootloader](http://www.ucapps.de/mios32_download.html), which allows you to quickly program new firmware over USB MIDI.
+ - [ST LINK utility](https://www.st.com/en/development-tools/st-link-v2.html) from ST Microelectronics, which allows you to flash the MIOS32 bootloader into a virgin STM32F4.
  - MIOS32 from the [SVN repository](http://svnmios.midibox.org/listing.php?repname=svn.mios32&path=/trunk/) 
  - [MIOS Studio tool](http://www.ucapps.de/mios_studio.html) which allows you to flash firmware
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTc0NDc2NTU4NSwxMjIzODk5NDk4LDExOT
-Q2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2
-LC0xNTIwMDYzN119
+eyJoaXN0b3J5IjpbLTE4ODUwMjA3MTYsMTIyMzg5OTQ5OCwxMT
+k0NjQxNzU5LDM0NjI5MTQ3LC0xNzg5ODQ4MDM3LDM1NzUxNzcw
+NiwtMTUyMDA2MzddfQ==
 -->
