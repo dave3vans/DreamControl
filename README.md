@@ -58,14 +58,14 @@ DreamControl is built on the excellent MIDIBox Hardware Platform operating syste
 
 To build and flash the firmware, you'll need to obtain:
 
- - 
+ - The GCC toolchain
  - [MIOS32 Bootloader](http://www.ucapps.de/mios32_download.html), which allows you to quickly flash new firmware over USB MIDI.
  - [ST LINK utility](https://www.st.com/en/development-tools/st-link-v2.html) from ST Microelectronics, which allows you to flash the MIOS32 bootloader into a virgin STM32F4.
  - MIOS32 from the [SVN repository](http://svnmios.midibox.org/listing.php?repname=svn.mios32&path=/trunk/) 
- - [MIOS Studio tool](http://www.ucapps.de/mios_studio.html) which is a Windows/Mac app for flashing new firmware, viewing MIDI
+ - [MIOS Studio tool](http://www.ucapps.de/mios_studio.html) which is a Windows/Mac app for flashing new firmware, viewing MIDI data, and sending and receiving debugging information via MIDI, as well as calibrating the motorfader (MF) board.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgxODMzMDg5NiwxMjIzODk5NDk4LDExOT
+eyJoaXN0b3J5IjpbMTczMzk1NDY1MCwxMjIzODk5NDk4LDExOT
 Q2NDE3NTksMzQ2MjkxNDcsLTE3ODk4NDgwMzcsMzU3NTE3NzA2
 LC0xNTIwMDYzN119
 -->
