@@ -78,7 +78,6 @@ public:
 private:
 	//==============================================================================
 	// Main
-
 	MidiOutput* midiOutput;
 	MidiInput* midiInput;
 

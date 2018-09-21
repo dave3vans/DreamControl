@@ -18,14 +18,14 @@
 // Global definitions
 /////////////////////////////////////////////////////////////////////////////
 
-#define DAW_USB_PORT USB0                               // USB port our DAW is connected to.
-                                                        // This is currently Cubase, via a Generic Remote mapping.
-#define PLUGIN_USB_PORT USB1                            // USB port our plugin is directly connected to.
-                                                        // We use this for controlling plugin-specific parameters directly, and sending metering sysex.
-#define MF_CALIBRATION_USB_PORT USB2                    // USB2 is only used for MF board calibration.
+#define DAW_USB_PORT USB0               // USB port our DAW is connected to.
+                                        // This is currently Cubase, via a Generic Remote mapping.
+#define PLUGIN_USB_PORT USB1            // USB port our plugin is directly connected to.
+                                        // We use this for controlling plugin-specific parameters directly, and sending metering sysex.
+#define MF_CALIBRATION_USB_PORT USB2    // USB2 is only used for MF board calibration.
 
-#define LED_BRIGHTNESS 0.02f                            // **** DANGER ** DO NOT ALTER THIS. MAY EXCEED CURRENT RATING OF POWER SUPPLY *******
-                                                        // Also, values below 0.02 cause incorrect colours to be displayed.
+#define LED_BRIGHTNESS 0.03f            // **** DANGER ** DO NOT ALTER THIS. MAY EXCEED CURRENT RATING OF POWER SUPPLY *******
+                                        // Also, values below 0.02 cause incorrect colours to be displayed.
 
 
 /////////////////////////////////////////////////////////////////////////////

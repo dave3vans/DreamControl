@@ -702,17 +702,51 @@ AudioProcessorEditor* DreamControlAudioProcessor::createEditor()
 }
 
 //==============================================================================
+// Parameter state persistence.
+// TODO: Use AudioProcessorValueTreeState to manage parameters and persist state.
+
 void DreamControlAudioProcessor::getStateInformation(MemoryBlock& destData)
 {
-	// You should use this method to store your parameters in the memory block.
-	// You could do that either as raw data, or use the XML or ValueTree classes
-	// as intermediaries to make it easy to save and load complex data.
+	MemoryOutputStream stream(destData, true);
+
+	stream.writeFloat(monitorLevel->get());
+	stream.writeBool(*muteMode);
+	stream.writeBool(*dimMode);
+	stream.writeBool(*refMode);
+	stream.writeBool(*midSolo);
+	stream.writeBool(*sideSolo);
+	stream.writeBool(*loudnessMode);
+	stream.writeFloat(lufsTarget->get());
+	stream.writeBool(*lufsMode);
+	stream.writeBool(*peakWithMomentaryMode);
+	stream.writeBool(*relativeMode);
+	stream.writeBool(*is1dbPeakScale);
+	stream.writeFloat(dimLevel->get());
+	stream.writeFloat(refLevel->get());
+	stream.writeFloat(peakHoldSeconds->get());
+	stream.writeBool(*volModMode);
 }
 
 void DreamControlAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
-	// You should use this method to restore your parameters from this memory block,
-	// whose contents will have been created by the getStateInformation() call.
+	MemoryInputStream stream(data, static_cast<size_t> (sizeInBytes), false);
+
+	*monitorLevel = stream.readFloat();
+	muteMode->setValueNotifyingHost(stream.readBool());
+	dimMode->setValueNotifyingHost(stream.readBool());
+	refMode->setValueNotifyingHost(stream.readBool());
+	midSolo->setValueNotifyingHost(stream.readBool());
+	sideSolo->setValueNotifyingHost(stream.readBool());
+	loudnessMode->setValueNotifyingHost(stream.readBool());
+	*lufsTarget = stream.readFloat();
+	lufsMode->setValueNotifyingHost(stream.readBool());
+	peakWithMomentaryMode->setValueNotifyingHost(stream.readBool());
+	relativeMode->setValueNotifyingHost(stream.readBool());
+	is1dbPeakScale->setValueNotifyingHost(stream.readBool());
+	*dimLevel = stream.readFloat();
+	*refLevel = stream.readFloat();
+	*peakHoldSeconds = stream.readFloat();
+	volModMode->setValueNotifyingHost(stream.readBool());
 }
 
 //==============================================================================
