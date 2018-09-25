@@ -7,7 +7,7 @@
 
 This is an open-source project for my 'dream' DAW controller. There are several controllers and plugins on the market that do similar things - I wanted everything neatly integrated, so I came up with this design. The designs and code are free for personal use (not for commercial use).
 
-The system consists of a hardware **USB control surface** built using the excellent [MIDIbox](http://www.ucapps.de/) platform, and a **VST plugin** that works with Cubase's 'Control Room'.
+The system consists of a **hardware control surface** connected via MIDI-over-USB and built on the excellent [MIDIbox](http://www.ucapps.de/) platform, and a **VST plugin** that handles audio processing, and works with Cubase's 'Control Room'.
 
 Currently, the system is designed for my DAW of choice which is **Cubase**, and the plugin can be used with it's Control Room feature, but it could easily be adapted to support Logic, Bitwig, or other DAWs.
 
@@ -52,11 +52,17 @@ The hardware consists of
 	 - WS2812 RGB LED ring ([NeoPixel brand](https://www.adafruit.com/product/1463))
  - ALPS 100mm motorised fader ([RSA0N11M9A0K](https://www.reichelt.com/de/en/alps-rsa0n-studio-fader-motor-and-touch-sense-10k-rsa0n11m9-lin10k-p73884.html?ARTICLE=73884&&r=1))
  - 5V 1.5A / 12V 1.5A power supply (butchered from an old external hard drive enclosure)
+ - [Aluminium desktop enclosure](https://www.reichelt.com/de/en/aluminium-desktop-enclosure-181-2-x-68-2-x-250-mm-atph-1865-250-p126238.html?), by BOPLA.
+ - Front panel custom CNC milled and engraved by [Schaeffer](https://www.schaeffer-ag.de/en/), designed with their [front panel designer app](https://www.schaeffer-ag.de/en/downloads/front_panel_designer/).
+ 
+The FPD (Front Panel Designer) file can be found in the `/frontpanel` directory.
 
+The motor fader calibration SysEx file (for use with MIOS Studio) can be found in the `/calibration` directory. This is the calibration I am using for the ALPS fader above, although I'm not exactly sure how this is supposed to work, so will probably be revised over time!
+ 
 TODO: Schematics and hardware build photos
 
 ## Firmware
-DreamControl is built on the excellent MIDIBox operating system, which is called MIOS32 and runs on the STM32F407. It is based on a Real Time Operating System derived from FreeRTOS. The toolchain for MIOS32 is based on GCC and uses the C language.
+The DreamControl firmware is written in C and uses the excellent MIDIBox operating system, which is called MIOS32 and runs on the STM32F407. It is based on a Real Time Operating System derived from FreeRTOS. The toolchain for MIOS32 is based on GCC.
 
 To build and flash the firmware, you'll need to obtain:
 
@@ -68,8 +74,29 @@ To build and flash the firmware, you'll need to obtain:
 
 The code is split into various modules. Code files and function names begin with the prefix `DC_`, except MIOS32 hooks which begin `APP_`.
 
+## Plugin
+The audio side of the system is handled by a [VST](https://en.wikipedia.org/wiki/Virtual_Studio_Technology) plugin running in the DAW - in our case, in Cubase's 'Control Room' insert section, but could equally be on the master bus. The plugin is written in C++ and uses the excellent JUCE framework.
  
+To build the plugin, you'll need to:
+
+ - Download the [JUCE framework](https://shop.juce.com/get-juce). It is free for personal use.
+ - Make sure the `JuceLibraryCode` folder is copied to the `/plugin` folder.
+ - Use Visual Studio to build the plugin.
  
+The plugin handles various audio processing and metering tasks:
+
+ - 4-band solo, using Linkwitz-Riley IIR crossover filters
+ - MS solo (mono and side band)
+ - 'Loud' mode, using 7 IIR peak filters
+ - Monitor level, mute, dim and reference levels
+ - EBU R128 / ITU 1770 metering - LUFS and True Peak realtime values and max, sent to hardware as MIDI SysEx packet.
+ - Various meter options.
+ 
+Some of the controls are mapped directly to the DAW, instead of going through the plugin, such as the fader and channel strip controls, transport controls, and for Cubase, the monitor source and speaker select (handled by Cubase's Control Room). For a DAW without the Control Room feature, this routing would need to be done somehow - Apple Logic has the 'environment' which could facilitate this.
+
+TODO: Make channel strip controls Mackie HUI/Control compliant.
+
+
    
  # 
 Copyright © 2018 David Evans. Licensed for personal non-commercial use only. 
