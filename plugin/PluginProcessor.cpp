@@ -147,7 +147,8 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 		}
 
 	found_button:
-		midiOutput->sendMessageNow(MidiMessage::noteOn(1, button, newValue ? 1.0f : 0.0f));
+		if (midiOutput != NULL)
+			midiOutput->sendMessageNow(MidiMessage::noteOn(1, button, newValue ? 1.0f : 0.0f));
 	};
 
 	// Initialise level controls
@@ -673,8 +674,9 @@ void DreamControlAudioProcessor::handleIncomingMidiMessage(MidiInput* source, co
 		if (data[0] == SYSEX_COMMAND_SYNC_BUTTONS)
 		{
 			// Send all button values out.
-			for (auto p : button_param_map)		
-				midiOutput->sendMessageNow(MidiMessage::noteOn(1, p.first, p.second->get() ? 1.0f : 0.0f));
+			for (auto p : button_param_map)	
+				if (midiOutput != NULL)
+					midiOutput->sendMessageNow(MidiMessage::noteOn(1, p.first, p.second->get() ? 1.0f : 0.0f));
 			
 		}
 	}
