@@ -55,7 +55,7 @@ The hardware consists of
  - [Aluminium desktop enclosure](https://www.reichelt.com/de/en/aluminium-desktop-enclosure-181-2-x-68-2-x-250-mm-atph-1865-250-p126238.html?), by BOPLA.
  - Front panel custom CNC milled and engraved by [Schaeffer](https://www.schaeffer-ag.de/en/), designed with their [front panel designer app](https://www.schaeffer-ag.de/en/downloads/front_panel_designer/).
  
-The FPD (Front Panel Designer) file can be found in the `/frontpanel` directory.
+The FPD (Front Panel Designer) file can be found in the `/frontpanel` directory. A Photoshop file for the button labels is also present (TODO). These push buttons can easily have labels inserted into their caps - so I simply printed out labels onto acetate transparency. This is a good system because it means features can be added at a later date simply by changing the labels, without needing to make changes to the front panel.
 
 The motor fader calibration SysEx file (for use with MIOS Studio) can be found in the `/calibration` directory. This is the calibration I am using for the ALPS fader above, although I'm not exactly sure how this is supposed to work, so will probably be revised over time!
  
@@ -96,7 +96,8 @@ Some of the controls are mapped directly to the DAW, instead of going through th
 
 TODO: Make channel strip controls Mackie HUI/Control compliant.
 
-
+## Future
+In the future, I hope to expand the system to deal with 5.1 surround sources. This includes downmix options and L/C/R/Lfe/LS/RS solo buttons, possibly using the top-right band solo and EXT1/EXT2 buttons for this purpose, either shifted, or dedicated.
    
  # 
 Copyright © 2018 David Evans. Licensed for personal non-commercial use only. 
