@@ -26,7 +26,8 @@
 // local variables
 /////////////////////////////////////////////////////////////////////////////
 
-#define J10_PINS_COUNT 6                // The number of GPIO pins on J10A that we are using for buttons.
+#define DOUT_PINS_COUNT 32              // The number of DOUT pins that we are using for LEDs.
+#define J10_PINS_USED 6                 // The number of GPIO pins on J10A that we are using for buttons.
 
 /////////////// BUTTONS
 // * DO NOT CHANGE ORDER * index corresponds with DIN pin (0-31) or J10A pin (32-37, pins D0-D5)
@@ -83,7 +84,9 @@ typedef enum {
     BUTTON_RESET_METER = 1000,
     BUTTON_PEAK_LUFS = 1001,
     BUTTON_ABS_REL = 1002,
-    
+    BUTTON_1DB_PEAK_SCALE = 1003,
+    BUTTON_3RD_METER_IS_MOMENTARY = 1004,
+
     BUTTON_SAVE = 1008,
 
     BUTTON_LOOP1 = 1024,
@@ -93,14 +96,15 @@ typedef enum {
 
     BUTTON_MUTE_CLEAR = 1033,
     BUTTON_SOLO_CLEAR = 1034,
+    BUTTON_READ_ALL = 1035,
+    BUTTON_WRITE_ALL = 1036,
     BUTTON_VOL_MOD = 1037
 } button_shifted_t;
 
 typedef enum {
     // 'Unassigned' buttons are actions we haven't assigned to physical buttons (yet)
     // but can be set in the plugin, e.g. some meter mode settings. Starts at 10000.
-    BUTTON_3RD_METER_IS_MOMENTARY = 10000,
-    BUTTON_1DB_PEAK_SCALE = 10001
+    NONE = 10001
 } button_unassigned_t;
 
 /////////////// LEDs
@@ -108,41 +112,41 @@ typedef enum {
 
 typedef enum {
     /////// DOUT pins 0-31
-    LED_LOUD = 0,
-    LED_MONO = 1,
-    LED_SIDE = 2,
-    LED_LOW = 3,
-    LED_LOMID = 4,
-    LED_HIMID = 5,
-    LED_HIGH = 6,
-    LED_MIX = 7,
+    LED_LOUD = 7,
+    LED_MONO = 6,
+    LED_SIDE = 5,
+    LED_LOW = 4,
+    LED_LOMID = 3,
+    LED_HIMID = 2,
+    LED_HIGH = 1,
+    LED_MIX = 0,
 
-    LED_CUE1 = 8,
-    LED_CUE2 = 9,
-    LED_CUE3 = 10,
-    LED_CUE4 = 11,
-    LED_EXT1 = 12,
-    LED_EXT2 = 13,
-    LED_MAIN = 14,
-    LED_ALT1 = 15,
+    LED_CUE1 = 15,
+    LED_CUE2 = 14,
+    LED_CUE3 = 13,
+    LED_CUE4 = 12,
+    LED_EXT1 = 11,
+    LED_EXT2 = 10,
+    LED_MAIN = 9,
+    LED_ALT1 = 8,
 
-    LED_ALT2 = 16,
-    LED_ALT3 = 17,
-    LED_MONMUTE = 18,
-    LED_DIM = 19,
-    LED_REF = 20,
-    LED_RETURN = 21,
-    LED_LOOP = 22,
-    LED_PLAY = 23,
+    LED_ALT2 = 23,
+    LED_ALT3 = 22,
+    LED_MONMUTE = 21,
+    LED_DIM = 20,
+    LED_REF = 19,
+    LED_RETURN = 18,
+    LED_LOOP = 17,
+    LED_PLAY = 16,
 
-    LED_STOP = 24,
-    LED_CLICK = 25,
-    LED_RECORD = 26,
-    LED_MUTE = 27,
-    LED_SOLO = 28,
-    LED_READ = 29,
-    LED_WRITE = 30,
-    LED_TALK = 31
+    LED_STOP = 31,
+    LED_CLICK = 30,
+    LED_RECORD = 29,
+    LED_MUTE = 28,
+    LED_SOLO = 27,
+    LED_READ = 26,
+    LED_WRITE = 25,
+    LED_TALK = 24
 } led_t;
 
 /////////////// BUTTON MIDI NOTE MAPPINGS
@@ -152,7 +156,7 @@ typedef enum {
 // Array index: 0 = MIDI port, 1 = Button number, 2 = LED number... etc.
 // -1 means no LED for that button. >=35 are shifted functions.
 
-const int midi_button_led_map[144] = {            // MIDI note number
+const int midi_button_led_map[171] = {            // MIDI note number
     PLUGIN_USB_PORT, BUTTON_LOUD, LED_LOUD,       // 0
     PLUGIN_USB_PORT, BUTTON_MONO, LED_MONO,       // 1
     PLUGIN_USB_PORT, BUTTON_SIDE, LED_SIDE,       // 2
@@ -200,9 +204,19 @@ const int midi_button_led_map[144] = {            // MIDI note number
     DAW_USB_PORT, BUTTON_MUTE_CLEAR, -1,          // 43
     DAW_USB_PORT, BUTTON_SOLO_CLEAR, -1,          // 44
     PLUGIN_USB_PORT, BUTTON_VOL_MOD, -1,          // 45
+    PLUGIN_USB_PORT, BUTTON_READ_ALL, -1,         // 46
+    PLUGIN_USB_PORT, BUTTON_WRITE_ALL, -1,        // 47
 
-    PLUGIN_USB_PORT, BUTTON_3RD_METER_IS_MOMENTARY, -1,     // 46   Unassigned
-    PLUGIN_USB_PORT, BUTTON_1DB_PEAK_SCALE, -1              // 47
+    PLUGIN_USB_PORT, BUTTON_3RD_METER_IS_MOMENTARY, -1,      // 48   
+    PLUGIN_USB_PORT, BUTTON_1DB_PEAK_SCALE, -1,              // 49
+
+    DAW_USB_PORT, BUTTON_MIX, -1,                 // 50   Send additional MIDI notes for MIX/CUE buttons.
+    DAW_USB_PORT, BUTTON_CUE1, -1,                // 51     
+    DAW_USB_PORT, BUTTON_CUE2, -1,                // 52
+    DAW_USB_PORT, BUTTON_CUE3, -1,                // 53
+    DAW_USB_PORT, BUTTON_CUE4, -1,                // 54
+    DAW_USB_PORT, BUTTON_EXT1, -1,                // 55
+    DAW_USB_PORT, BUTTON_EXT2, -1,                // 59
 };
 
 u16 current_j10_state;
@@ -213,10 +227,13 @@ void DC_BUTTONS_Init()
     // Init first six J10A pins to be inputs with internal pull-up.
     // Our 6 channel strip buttons are connected to J10A.
     int i;
-    for (i = 0; i < J10_PINS_COUNT; i++)
+    for (i = 0; i < J10_PINS_USED; i++)
     {
         MIOS32_BOARD_J10_PinInit(i, MIOS32_BOARD_PIN_MODE_INPUT_PU);
     }
+
+    for (i = 0; i < DOUT_PINS_COUNT; i++)
+        MIOS32_DOUT_PinSet(i, 0);
     
     // Request all plugin button states from plugin.
     DC_SYSEX_SendCommand(PLUGIN_USB_PORT, SYSEX_COMMAND_SYNC_BUTTONS, "");
@@ -225,22 +242,27 @@ void DC_BUTTONS_Init()
 void DC_BUTTONS_Tick()
 {
     // If the state of a J10A pin has changed, send corresponding MIDI note message (or set Shift).
-    // Note that the pin is 0 (0V) when pressed, as it is pulled up, so normally high.
+    // The pin is 0 (0V) when pressed, as it is pulled up, so normally high.
     u16 new_j10_state = MIOS32_BOARD_J10_Get();
+
     int i;
-    for (i = 0; i < J10_PINS_COUNT; i++)
+    for (i = 0; i < J10_PINS_USED; i++)
     {
         int button = i + 32;       // J10 buttons start at 32.
 
-        if ((new_j10_state & (1 << i)) == 1 && (current_j10_state & (1 << i)) == 0)
+        if ((new_j10_state & (1 << i)) == (1 << i) && (current_j10_state & (1 << i)) == 0)
         {
+            MIOS32_MIDI_SendDebugMessage("J10  pin %d   value 0", i);
+
             if (button == BUTTON_SHIFT) 
                 is_shifted = false;           
             else          
                 DC_BUTTONS_ButtonChanged(button, 0);         
         }
-        else if ((new_j10_state & (1 << i)) == 0 && (current_j10_state & (1 << i)) == 1)
+        else if ((new_j10_state & (1 << i)) == 0 && (current_j10_state & (1 << i)) == (1 << i))
         {
+            MIOS32_MIDI_SendDebugMessage("J10  pin %d   value 1", i);
+
             if (button == BUTTON_SHIFT) 
                 is_shifted = true;           
             else          
@@ -253,10 +275,10 @@ void DC_BUTTONS_Tick()
 
 void DC_BUTTONS_DIN_NotifyToggle(u32 pin, u32 pin_value)
 {
-    // If a DIN pin has changed (which are buttons are connected to), send corresponding MIDI note message.
+    // If a DIN pin has changed (which our buttons are connected to), send corresponding MIDI note message.
     MIOS32_MIDI_SendDebugMessage("DIN  pin %d   value %d", pin, pin_value);
 
-    // Note that the pin is 0 (0V) when pressed, as it is pulled up, so normally high.
+    // The pin is 0 (0V) when pressed, as it is pulled up, so normally high.
     if (pin < 32)
     {
         if (pin == BUTTON_SHIFT) 
@@ -268,11 +290,14 @@ void DC_BUTTONS_DIN_NotifyToggle(u32 pin, u32 pin_value)
 
 void DC_BUTTONS_ButtonChanged(u32 button, u8 state)
 {
+    MIOS32_MIDI_SendDebugMessage("BUTTON   button %d  state %d", button, state);
+
     // Send a NoteOn message when button state changes. Velocity=0 means off.
     // Also turn on/off corresponding LED, if applicable.
     int i;
     u8 index = 0;
-    for (i = 0; i < sizeof(midi_button_led_map); i += 3)
+
+    for (i = 0; i < sizeof(midi_button_led_map) / 4; i += 3)
     {
         if (midi_button_led_map[i + 1] == button + (is_shifted ? 1000 : 0))
         {
@@ -280,10 +305,10 @@ void DC_BUTTONS_ButtonChanged(u32 button, u8 state)
 
             MIOS32_MIDI_SendNoteOn(midi_button_led_map[i], Chn1, index, state == 1 ? 127 : 0);
 
+            if (midi_button_led_map[i + 1] == BUTTON_RETURN)
+                MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], state);
             if (state == 1 && midi_button_led_map[i + 2] > -1) 
-                MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], 1);
-
-            break;
+                MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], 1 - MIOS32_DOUT_PinGet(midi_button_led_map[i + 2]));
         }
         
         index++;
@@ -297,7 +322,7 @@ void DC_BUTTONS_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_
     // Turn on/off an LED if corresponding NoteOn value received.
     if (midi_package.chn == Chn1 && midi_package.type == NoteOn)
     {
-        if (midi_package.note < (sizeof(midi_button_led_map) / 3) && port == midi_button_led_map[midi_package.note * 3])
+        if (midi_package.note < (sizeof(midi_button_led_map) / 4 / 3) && port == midi_button_led_map[midi_package.note * 3])
         {
             int led_pin = midi_button_led_map[(midi_package.note * 3) + 2];
             MIOS32_MIDI_SendDebugMessage("LED PIN  %d   = %d", led_pin, midi_package.velocity > 0 ? 1 : 0);
@@ -343,4 +368,12 @@ void DC_BUTTONS_HandleCommand(int button, bool state)
         
     else
         return;
+}
+
+void DC_BUTTONS_Test()
+{
+    // Switch on all button LEDs.
+    int i;
+    for (i = 0; i < DOUT_PINS_COUNT; i++)
+        MIOS32_DOUT_PinSet(i, 1);
 }

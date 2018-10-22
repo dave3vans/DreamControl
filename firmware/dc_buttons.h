@@ -29,6 +29,7 @@
 
 extern void DC_BUTTONS_Init();
 extern void DC_BUTTONS_Tick();
+extern void DC_BUTTONS_Test();
 extern void DC_BUTTONS_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t midi_package);
 extern void DC_BUTTONS_DIN_NotifyToggle(u32 pin, u32 pin_value);
 

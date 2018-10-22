@@ -44,6 +44,7 @@ typedef enum {
 /////////////////////////////////////////////////////////////////////////////
 
 extern void DC_METERS_Init();
+extern void DC_METERS_Test();
 extern void DC_METERS_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t midi_package);
 extern void DC_METERS_Update(char* meter_data);
 extern void DC_METERS_SetMeterMode(bool isLufs);

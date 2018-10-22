@@ -25,6 +25,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 extern void DC_KNOB_Init();
+extern void DC_KNOB_Test();
 extern void DC_KNOB_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t midi_package);
 extern void DC_KNOB_NotifyChange(u32 encoder, s32 incrementer);
 extern void DC_KNOB_SetCurrentKnob(u8 knob_index);

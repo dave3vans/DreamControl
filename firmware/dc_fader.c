@@ -38,6 +38,9 @@ void DC_FADER_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t 
     ///////////////////  FADER POSITION TO/FROM DAW
 
     // MF board sends MIDI CC0 and CC32 for 14bit value, but our DAW only accepts NRPN values, so we convert.
+    // Also, we invert values because our fader is upside down!
+
+    // Receive from MF board, transmit to DAW.
     if (port == UART0 && midi_package.chn == Chn1 && midi_package.type == CC)
     {
         if (midi_package.cc_number == MF_VALUE_CC_MSB)
@@ -49,11 +52,13 @@ void DC_FADER_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t 
             // Convert to NRPN for DAW
             MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, 99, 0);
             MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, 98, MF_VALUE_NRPN_LSB);
-            MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, 6, current_mf_value_msb);
-            MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, 38, midi_package.value);        
+            MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, 6, 127 - current_mf_value_msb);
+            MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, 38, 127 - midi_package.value);        
             current_mf_value_msb = -1;
         }
     }
+
+    // Receive from DAW, transmit to MF board.
     if (port == DAW_USB_PORT && midi_package.chn == Chn1 && midi_package.type == CC)
     {
         if (midi_package.cc_number == 98 && midi_package.value == MF_VALUE_NRPN_LSB)       // 98 = NRPN LSB
@@ -67,8 +72,8 @@ void DC_FADER_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t 
         else if (midi_package.cc_number == 38 && current_daw_channel_value_msb > -1)       // 38 = Data Entry LSB
         {
             // Convert to CC for MF board
-            MIOS32_MIDI_SendCC(UART0, Chn1, MF_VALUE_CC_MSB, current_daw_channel_value_msb);
-            MIOS32_MIDI_SendCC(UART0, Chn1, MF_VALUE_CC_LSB, midi_package.value);
+            MIOS32_MIDI_SendCC(UART0, Chn1, MF_VALUE_CC_MSB, 127 - current_daw_channel_value_msb);
+            MIOS32_MIDI_SendCC(UART0, Chn1, MF_VALUE_CC_LSB, 127 - midi_package.value);
             current_daw_channel_value_msb = -1;
             daw_channel_nrpn_is_next = -1;
         }

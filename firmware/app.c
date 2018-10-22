@@ -71,6 +71,15 @@ void APP_Init(void)
         // Blue LED on CPU board to show Init was completed successfully.
         MIOS32_BOARD_LED_Set(0x0008, 0x0008);
     }
+    
+    // Test mode - hold SHIFT at boot to switch on all LEDs.
+    // TODO: Getting J10 pin value causes LCD reset to fail! Not sure why...
+    if (false)  // (MIOS32_BOARD_J10_PinGet(0) == 0)
+    {
+        DC_BUTTONS_Test();
+        DC_METERS_Test();
+        DC_KNOB_Test();
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////

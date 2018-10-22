@@ -1,30 +1,233 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <remotedescription version="1.1">
 <ctrltable name="Standard MIDI">
-<ctrl><name>Monitor Level</name><stat>176</stat><chan>0</chan><addr>7</addr><max>127</max><flags>3</flags></ctrl>
 <ctrl><name>Channel Volume</name><stat>2</stat><chan>0</chan><addr>1</addr><max>16384</max><flags>3</flags></ctrl>
+<ctrl><name>Channel Mute</name><stat>144</stat><chan>0</chan><addr>30</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Channel Solo</name><stat>144</stat><chan>0</chan><addr>31</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Channel Read</name><stat>144</stat><chan>0</chan><addr>32</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Channel Write</name><stat>144</stat><chan>0</chan><addr>33</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Source Mix</name><stat>144</stat><chan>0</chan><addr>7</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Source Cue1</name><stat>144</stat><chan>0</chan><addr>8</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Source Cue2</name><stat>144</stat><chan>0</chan><addr>9</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Source Cue3</name><stat>144</stat><chan>0</chan><addr>10</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Source Cue4</name><stat>144</stat><chan>0</chan><addr>11</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Monitor Level</name><stat>176</stat><chan>0</chan><addr>7</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Source Ext1</name><stat>144</stat><chan>0</chan><addr>12</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Monitor Main</name><stat>144</stat><chan>0</chan><addr>14</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Monitor Alt1</name><stat>144</stat><chan>0</chan><addr>15</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Monitor Alt2</name><stat>144</stat><chan>0</chan><addr>16</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Monitor Alt3</name><stat>144</stat><chan>0</chan><addr>17</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Transport Return</name><stat>144</stat><chan>0</chan><addr>21</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Transport Loop</name><stat>144</stat><chan>0</chan><addr>22</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Transport Back</name><stat>144</stat><chan>0</chan><addr>23</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Transport Forward</name><stat>144</stat><chan>0</chan><addr>24</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Transport Play</name><stat>144</stat><chan>0</chan><addr>25</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Transport Stop</name><stat>144</stat><chan>0</chan><addr>26</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Transport Click</name><stat>144</stat><chan>0</chan><addr>27</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Transport Record</name><stat>144</stat><chan>0</chan><addr>28</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Source Mix Phones</name><stat>144</stat><chan>0</chan><addr>50</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Source Cue1 Phones</name><stat>144</stat><chan>0</chan><addr>51</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Source Cue2 Phones</name><stat>144</stat><chan>0</chan><addr>52</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Source Cue3 Phones</name><stat>144</stat><chan>0</chan><addr>53</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Source Cue4 Phones</name><stat>144</stat><chan>0</chan><addr>54</addr><max>127</max><flags>3</flags></ctrl>
+<ctrl><name>Save</name><stat>144</stat><chan>0</chan><addr>38</addr><max>127</max><flags>1</flags></ctrl>
+<ctrl><name>Mute Clear</name><stat>144</stat><chan>0</chan><addr>43</addr><max>127</max><flags>1</flags></ctrl>
+<ctrl><name>Solo Clear</name><stat>144</stat><chan>0</chan><addr>44</addr><max>127</max><flags>1</flags></ctrl>
+<ctrl><name>Read All</name><stat>144</stat><chan>0</chan><addr>46</addr><max>127</max><flags>1</flags></ctrl>
+<ctrl><name>Write All</name><stat>144</stat><chan>0</chan><addr>47</addr><max>127</max><flags>1</flags></ctrl>
+<ctrl><name>Loop1</name><stat>144</stat><chan>0</chan><addr>39</addr><max>127</max><flags>1</flags></ctrl>
+<ctrl><name>Loop2</name><stat>144</stat><chan>0</chan><addr>40</addr><max>127</max><flags>1</flags></ctrl>
+<ctrl><name>Loop8</name><stat>144</stat><chan>0</chan><addr>41</addr><max>127</max><flags>1</flags></ctrl>
+<ctrl><name>Loop16</name><stat>144</stat><chan>0</chan><addr>42</addr><max>127</max><flags>1</flags></ctrl>
 </ctrltable>
 <bank name="VST 1-16">
+<entry ctrl="Channel Volume">
+<value><device>VST Mixer</device><chan>-2</chan><name>volume</name><flags>0</flags></value>
+</entry>
+<entry ctrl="Channel Mute">
+<value><device>VST Mixer</device><chan>-2</chan><name>mute</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Channel Solo">
+<value><device>VST Mixer</device><chan>-2</chan><name>solo</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Channel Read">
+<value><device>VST Mixer</device><chan>-2</chan><name>readEnable</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Channel Write">
+<value><device>VST Mixer</device><chan>-2</chan><name>writeEnable</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Source Mix">
+<value><device>VST Control Room</device><chan>1</chan><name>inputMixProxy</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Source Cue1">
+<value><device>VST Control Room</device><chan>1</chan><name>inputStudioProxy1</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Source Cue2">
+<value><device>VST Control Room</device><chan>1</chan><name>inputStudioProxy2</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Source Cue3">
+<value><device>VST Control Room</device><chan>1</chan><name>inputStudioProxy3</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Source Cue4">
+<value><device>VST Control Room</device><chan>1</chan><name>inputStudioProxy4</name><flags>256</flags></value>
+</entry>
 <entry ctrl="Monitor Level">
 <value><device>VST Control Room</device><chan>1</chan><name>inserts/slot1:param0</name><flags>0</flags></value>
 </entry>
-<entry ctrl="Channel Volume">
-<value><device>VST Mixer</device><chan>-2</chan><name>volume</name><flags>0</flags></value>
+<entry ctrl="Source Ext1">
+<value><device>VST Control Room</device><chan>1</chan><name>inputExtReturnProxy</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Monitor Main">
+<value><device>VST Control Room</device><chan>-1</chan><tag>16399</tag><flags>256</flags></value>
+</entry>
+<entry ctrl="Monitor Alt1">
+<value><device>VST Control Room</device><chan>-1</chan><tag>16400</tag><flags>256</flags></value>
+</entry>
+<entry ctrl="Monitor Alt2">
+<value><device>VST Control Room</device><chan>-1</chan><tag>16401</tag><flags>256</flags></value>
+</entry>
+<entry ctrl="Monitor Alt3">
+<value><device>VST Control Room</device><chan>-1</chan><tag>16402</tag><flags>256</flags></value>
+</entry>
+<entry ctrl="Transport Return">
+<command><category>Transport</category><action>To Left Locator</action><flags>1</flags></command>
+</entry>
+<entry ctrl="Transport Loop">
+<value><device>Transport</device><chan>-1</chan><tag>4022</tag><flags>256</flags></value>
+</entry>
+<entry ctrl="Transport Back">
+<value><device>Transport</device><chan>-1</chan><tag>4112</tag><flags>0</flags></value>
+</entry>
+<entry ctrl="Transport Forward">
+<value><device>Transport</device><chan>-1</chan><tag>4113</tag><flags>0</flags></value>
+</entry>
+<entry ctrl="Transport Play">
+<value><device>Transport</device><chan>-1</chan><tag>4015</tag><flags>256</flags></value>
+</entry>
+<entry ctrl="Transport Stop">
+<value><device>Transport</device><chan>-1</chan><tag>4016</tag><flags>256</flags></value>
+</entry>
+<entry ctrl="Transport Click">
+<value><device>Transport</device><chan>-1</chan><tag>4099</tag><flags>256</flags></value>
+</entry>
+<entry ctrl="Transport Record">
+<value><device>Transport</device><chan>-1</chan><tag>4019</tag><flags>256</flags></value>
+</entry>
+<entry ctrl="Source Mix Phones">
+<value><device>VST Control Room</device><chan>14</chan><name>inputMixProxy</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Source Cue1 Phones">
+<value><device>VST Control Room</device><chan>14</chan><name>inputStudioProxy1</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Source Cue2 Phones">
+<value><device>VST Control Room</device><chan>14</chan><name>inputStudioProxy2</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Source Cue3 Phones">
+<value><device>VST Control Room</device><chan>14</chan><name>inputStudioProxy3</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Source Cue4 Phones">
+<value><device>VST Control Room</device><chan>14</chan><name>inputStudioProxy4</name><flags>256</flags></value>
+</entry>
+<entry ctrl="Save">
+<command><category>File</category><action>Save</action><flags>1</flags></command>
+</entry>
+<entry ctrl="Mute Clear">
+<command><category>Edit</category><action>Unmute All</action><flags>1</flags></command>
+</entry>
+<entry ctrl="Solo Clear">
+<command><category>Edit</category><action>Deactivate All Solo</action><flags>1</flags></command>
+</entry>
+<entry ctrl="Read All">
+<command><category>Automation</category><action>Toggle Read Enable All Tracks</action><flags>1</flags></command>
+</entry>
+<entry ctrl="Write All">
+<command><category>Automation</category><action>Toggle Write Enable All Tracks</action><flags>1</flags></command>
+</entry>
+<entry ctrl="Loop1">
+</entry>
+<entry ctrl="Loop2">
+</entry>
+<entry ctrl="Loop8">
+</entry>
+<entry ctrl="Loop16">
 </entry>
 </bank>
 <bank name="VST 17-32">
-<entry ctrl="Channel Volume">
+<entry ctrl="Source Cue2 Phones">
+</entry>
+<entry ctrl="Source Cue3 Phones">
+</entry>
+<entry ctrl="Source Cue4 Phones">
+</entry>
+<entry ctrl="Save">
+</entry>
+<entry ctrl="Mute Clear">
+</entry>
+<entry ctrl="Solo Clear">
+</entry>
+<entry ctrl="Read All">
+</entry>
+<entry ctrl="Write All">
+</entry>
+<entry ctrl="Loop1">
+</entry>
+<entry ctrl="Loop2">
+</entry>
+<entry ctrl="Loop8">
+</entry>
+<entry ctrl="Loop16">
 </entry>
 </bank>
 <bank name="VST 33-48">
-<entry ctrl="Channel Volume">
+<entry ctrl="Source Cue2 Phones">
+</entry>
+<entry ctrl="Source Cue3 Phones">
+</entry>
+<entry ctrl="Source Cue4 Phones">
+</entry>
+<entry ctrl="Save">
+</entry>
+<entry ctrl="Mute Clear">
+</entry>
+<entry ctrl="Solo Clear">
+</entry>
+<entry ctrl="Read All">
+</entry>
+<entry ctrl="Write All">
+</entry>
+<entry ctrl="Loop1">
+</entry>
+<entry ctrl="Loop2">
+</entry>
+<entry ctrl="Loop8">
+</entry>
+<entry ctrl="Loop16">
 </entry>
 </bank>
 <bank name="VST 49-64">
-<entry ctrl="Monitor Level">
-<value><device>VST Mixer</device><chan>-2</chan><name>volume</name><flags>0</flags></value>
+<entry ctrl="Source Cue2 Phones">
 </entry>
-<entry ctrl="Channel Volume">
+<entry ctrl="Source Cue3 Phones">
+</entry>
+<entry ctrl="Source Cue4 Phones">
+</entry>
+<entry ctrl="Save">
+</entry>
+<entry ctrl="Mute Clear">
+</entry>
+<entry ctrl="Solo Clear">
+</entry>
+<entry ctrl="Read All">
+</entry>
+<entry ctrl="Write All">
+</entry>
+<entry ctrl="Loop1">
+</entry>
+<entry ctrl="Loop2">
+</entry>
+<entry ctrl="Loop8">
+</entry>
+<entry ctrl="Loop16">
 </entry>
 </bank>
 </remotedescription>

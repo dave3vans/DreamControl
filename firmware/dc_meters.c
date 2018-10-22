@@ -31,6 +31,7 @@
 
 #define LED_METER_SIZE 15               // The number of LEDs in each of our meters.
 #define LED_METER_START_INDEX 0         // The start index of the first LED of the first meter.
+#define LED_METER_COUNT 3               // The number of meters we have.
 
 // Arrays of hue (colour) values and dB values for each LED for the different meter types. Values start at bottom of meter.
 // Because of the way things work, we need LED_METER_SIZE+1 elements in these arrays.
@@ -201,9 +202,9 @@ void DC_METERS_UpdateLedMeter(char meter_index, char *meter_data, dc_meter_data_
     // We calculate LED values from the bottom of the meter (0 is bottom LED)
     for (led = 0; led < LED_METER_SIZE; led++)
     {
-        if ((data_index == PEAK_L && max_l > 0.0f) || (data_index == PEAK_R && max_r > 0.0f))
-            h = 0.0f; // If max above 0, make entire meter red.
-        else
+        //if ((data_index == PEAK_L && max_l > 0.0f) || (data_index == PEAK_R && max_r > 0.0f))
+        //    h = 0.0f; // If max above 0, make entire meter red.
+        //else
             h = (float)led_hue_list[led];
 
         if (value >= led_val_list[led + 1])
@@ -249,4 +250,12 @@ void DC_METERS_SetRelativeMode(bool isRelative)
 void DC_METERS_Set1dBScaleMode(bool isActive)
 {
     is_1db_scale = isActive;
+}
+
+void DC_METERS_Test()
+{
+    // Test mode - make all meter LEDs white.
+    int i;
+    for (i = LED_METER_START_INDEX; i < (LED_METER_SIZE * LED_METER_COUNT); i++)
+        WS2812_LED_SetHSV(i, 0, 0, LED_BRIGHTNESS);
 }
