@@ -32,7 +32,8 @@
 
 #define LED_RING_SIZE 16                                // Number of LEDs in our encoder ring.
 #define LED_RING_START_INDEX 45                         // The start index of the first LED.
-#define LED_RING_OFFSET -5                               // Depending on how the led ring board is mounted, the first LED may not be at the '-45' position.
+#define LED_RING_OFFSET -5                              // Depending on how the led ring board is mounted, the first LED may not be at the '-45' position.
+#define LED_RING_BRIGHTNESS_OFFSET -0.01                // The LED ring might have slightly different brightness, so we can adjust that here.
 
 /////////////////////////////////////////////////////////////////////////////
 // local variables
@@ -142,11 +143,11 @@ void DC_KNOB_UpdateLedRing()
 
         if (value >= (led + 1) * values_per_led)
         {
-            v = LED_BRIGHTNESS;
+            v = LED_BRIGHTNESS + LED_RING_BRIGHTNESS_OFFSET;
         }
         else if (value > led * values_per_led)
         {
-            v = ((float)(value % (int)values_per_led) / values_per_led) * LED_BRIGHTNESS;
+            v = ((float)(value % (int)values_per_led) / values_per_led) * (LED_BRIGHTNESS + LED_RING_BRIGHTNESS_OFFSET);
         }
         else
         {
@@ -201,6 +202,6 @@ void DC_KNOB_Test()
 {
     // Test mode - make all meter LEDs white.
     int i;
-    for (i = LED_RING_START_INDEX; i < LED_RING_START_INDEX + LED_RING_SIZE; i++)
+    for (i = LED_RING_START_INDEX; i < LED_RING_START_INDEX + 2; i++)
         WS2812_LED_SetHSV(i, 0, 0, LED_BRIGHTNESS);
 }

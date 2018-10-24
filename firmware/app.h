@@ -24,7 +24,7 @@
                                         // We use this for controlling plugin-specific parameters directly, and sending metering sysex.
 #define MF_CALIBRATION_USB_PORT USB2    // USB2 is only used for MF board calibration.
 
-#define LED_BRIGHTNESS 0.04f            // **** DANGER ** DO NOT ALTER THIS. MAY EXCEED CURRENT RATING OF POWER SUPPLY *******
+#define LED_BRIGHTNESS 0.02f            // **** DANGER ** DO NOT ALTER THIS. MAY EXCEED CURRENT RATING OF POWER SUPPLY *******
                                         // Also, values below 0.02 cause incorrect colours to be displayed.
 
 
