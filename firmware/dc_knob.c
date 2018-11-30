@@ -27,13 +27,13 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #define ENCODER_COUNT 1                                 // The number of physical knobs. This could be expanded in future.
-#define ENCODER_VOLUME_RANGE 96                         // The range of the encoder when controlling volume (corresponds to dB).
+#define ENCODER_VOLUME_RANGE 97                         // The range of the encoder when controlling volume (corresponds to dB).
 #define ENCODER_CC_RANGE 128                            // The range of the encoder when controlling other parameters (7 bit MIDI standard).
 
 #define LED_RING_SIZE 16                                // Number of LEDs in our encoder ring.
 #define LED_RING_START_INDEX 45                         // The start index of the first LED.
 #define LED_RING_OFFSET -5                              // Depending on how the led ring board is mounted, the first LED may not be at the '-45' position.
-#define LED_RING_BRIGHTNESS_OFFSET -0.01                // The LED ring might have slightly different brightness, so we can adjust that here.
+#define LED_RING_BRIGHTNESS_OFFSET 0                    // The LED ring might have slightly different brightness, so we can adjust that here.
 
 /////////////////////////////////////////////////////////////////////////////
 // local variables
@@ -79,7 +79,8 @@ void DC_KNOB_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t m
     int i;
     for (i = 0; i < sizeof(virtual_knob_CCs); i++) 
     {
-        if (port == DAW_USB_PORT && midi_package.chn == Chn1 && midi_package.type == CC && midi_package.cc_number == virtual_knob_CCs[i])
+        if ((i == 0 && port == PLUGIN_USB_PORT || i > 0 && port == MODULATE_USB_PORT)
+            && midi_package.chn == Chn1 && midi_package.type == CC && midi_package.cc_number == virtual_knob_CCs[i])
         {
             int max = virtual_knob_CCs[current_virtual_knob] == 7 ? ENCODER_VOLUME_RANGE : ENCODER_CC_RANGE;
             int value = midi_package.value - (128 - max);
@@ -113,14 +114,19 @@ void DC_KNOB_NotifyChange(u32 encoder, s32 incrementer)
     {
         // Store new value and send MIDI.
         virtual_knob_pos[current_virtual_knob] = value;
-        MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, virtual_knob_CCs[current_virtual_knob], (value == 0) ? 0 : value + (128 - max));
+
+        MIOS32_MIDI_SendCC(current_virtual_knob == 0 ? PLUGIN_USB_PORT : MODULATE_USB_PORT, 
+            Chn1, virtual_knob_CCs[current_virtual_knob], value);
       
         // Display dB value on LCD.
         if (is_volume) value = (int)((float)(-max + value) / 2.0f);
         char label[11];
         sprintf(label, "MIDI CC %d", virtual_knob_CCs[current_virtual_knob]);
 
-        DC_LCD_PopupBigValue(value, is_volume ? "MONITOR LEVEL    dBFS" : label, 1);
+        if (value == -48)
+            DC_LCD_PopupBigText("OFF", "MONITOR LEVEL    dBFS");
+        else 
+            DC_LCD_PopupBigValue(value, is_volume ? "MONITOR LEVEL    dBFS" : label);
     }
 
     // update LED ring

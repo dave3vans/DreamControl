@@ -88,7 +88,11 @@ void DC_METERS_Update(char *meter_data)
     char max_r[6];
     DC_METERS_GetLevelStringFromMeterData(max_r, meter_data, MAX_R, true);
     char level[6];
-    sprintf(level, " %d", DC_KNOB_GetKnobValue(0));
+    s8 vol = DC_KNOB_GetKnobValue(0);
+    if (vol == -48)
+        sprintf(level, " OFF");
+    else
+        sprintf(level, " %d", vol);
 
     char top_line[19];
     sprintf(top_line, "%s %s %s ", max_l, max_r, meter_data[CLIP_L] || meter_data[CLIP_R] ? " CLIP" : level);

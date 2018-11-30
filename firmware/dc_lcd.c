@@ -92,7 +92,7 @@ void DC_LCD_Tick()
 }
 
 // Pop up a message on the LCD for a few seconds.
-void DC_LCD_PopupBigValue(const int value, const char *value_label, const char is_negative)
+void DC_LCD_PopupBigValue(const int value, const char *value_label)
 {
     if (popup_timeout_value <= 0)
         MIOS32_LCD_Clear();
@@ -102,6 +102,27 @@ void DC_LCD_PopupBigValue(const int value, const char *value_label, const char i
     MIOS32_LCD_FontInit((u8 *)GLCD_FONT_MEGA);
     MIOS32_LCD_GCursorSet(0, 0);
     MIOS32_LCD_PrintFormattedString("%d  ", value);
+
+    MIOS32_LCD_FontInit((u8 *)GLCD_FONT_NORMAL);
+
+    MIOS32_LCD_GCursorSet(0, 6 * 8);
+    MIOS32_LCD_PrintFormattedString("                     ");
+
+    MIOS32_LCD_GCursorSet(0, 7 * 8);
+    MIOS32_LCD_PrintString(value_label);
+}
+
+// Pop up a message on the LCD for a few seconds.
+void DC_LCD_PopupBigText(const char* text, const char *value_label)
+{
+    if (popup_timeout_value <= 0)
+        MIOS32_LCD_Clear();
+
+    popup_timeout_value = 1;
+
+    MIOS32_LCD_FontInit((u8 *)GLCD_FONT_MEGA);
+    MIOS32_LCD_GCursorSet(0, 0);
+    MIOS32_LCD_PrintFormattedString(text);
 
     MIOS32_LCD_FontInit((u8 *)GLCD_FONT_NORMAL);
 

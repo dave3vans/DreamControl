@@ -27,7 +27,8 @@
 
 extern void DC_LCD_Init();
 extern void DC_LCD_Tick();
-extern void DC_LCD_PopupBigValue(const int value, const char* value_label, const char is_negative);
+extern void DC_LCD_PopupBigValue(const int value, const char* value_label);
+extern void DC_LCD_PopupBigText(const char* text, const char* value_label);
 extern void DC_LCD_Clear();
 extern void DC_LCD_Print(const int row, const int X, const int font_size, const char* text);
 

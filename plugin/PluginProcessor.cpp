@@ -13,7 +13,6 @@
 * ==========================================================================
 */
 
-
 #include <memory>
 #include <string>
 #include <math.h>
@@ -23,19 +22,20 @@
 #include "PluginEditor.h"
 #include "LufsProcessor.h"
 #include "CrossoverFilter.h"
+#include "RmeTotalMixFaderCurve.h"
 
-#define CALLBACK_TIMER_PERIOD_MS 10						// How often parameters, meters etc are updated.
+#define CALLBACK_TIMER_PERIOD_MS 10									// How often parameters, meters etc are updated.
 #define LOWEST_TRUE_PEAK_VALUE -125.0f
 #define LOWEST_LUFS_VALUE -64.0f
-#define LOWEST_VOLUME_VALUE -64.0f
+#define LOWEST_VOLUME_VALUE -48.0f
+#define VOLUME_CONTROL_MIDI_RANGE 96.0f
 #define HIGHEST_TRUE_PEAK_VALUE 3.0f
 
-// #define MIDI_OUT_PORT_NAME "loopMIDI Port"			// For debugging.
-// #define MIDI_IN_PORT_NAME "loopMIDI Port 1"
-#define MIDI_OUT_PORT_NAME "MIDIOUT2 (DreamControl)"	// Direct MIDI connection to our hardware.
-#define MIDI_IN_PORT_NAME "MIDIIN2 (DreamControl)"	
+#define MIDI_OUT_PORT_NAME "MIDIOUT2 (DreamControl)"				// Direct MIDI connection to our hardware.
+#define MIDI_IN_PORT_NAME "MIDIIN2 (DreamControl)"					
+#define MIDI_OUT_VOL_CONTROL_PORT_NAME "DreamControl Loopback"		// MIDI connection to an external volume control, currently RME TotalMix
 
-const int sysexManufacturerId[3] = { 0x00, 0x21, 0x69 };	// Our SysEx manufacturer ID.
+const int sysexManufacturerId[3] = { 0x00, 0x21, 0x69 };			// Our SysEx manufacturer ID.
 
 enum sysexCommand {
 	SYSEX_COMMAND_METER_DATA = 1,
@@ -105,6 +105,17 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 	{
 		NativeMessageBox::showMessageBox(AlertWindow::AlertIconType::WarningIcon, "DreamControl", "Failed to open input port from hardware.");
 		midiInput = NULL;
+	}
+
+	// We support an optional external volume control (e.g. RME TotalMix) on a loopback MIDI port.
+	int volControlDeviceId = MidiOutput::getDevices().indexOf(MIDI_OUT_VOL_CONTROL_PORT_NAME);
+	if (volControlDeviceId > -1)
+	{
+		midiOutputToVolControl = MidiOutput::openDevice(volControlDeviceId);
+	}
+	else
+	{
+		midiOutputToVolControl = NULL;
 	}
 
 	// Lambda for handling when a mode toggle changes.
@@ -215,6 +226,8 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 	addParameter(peakHoldSeconds = new AudioParameterFloat("peakHold", "Peak Hold (seconds)", 0.0f, 10.0f, 5.0f));
 	addParameter(volModMode = new AudioParameterBoolNotify("volModMode", "Volume/Modulate Mode (dev)", false, modeChangedFunction));
 
+	addParameter(useExternalVolControl = new AudioParameterBool("useExternalVolControl", "Use RME TotalMix volume control", 0));
+
 	// Our map of button note numbers to plugin parameters.
 	button_param_map = {
 		{ BUTTON_LOUD, loudnessMode },
@@ -238,11 +251,11 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 
 DreamControlAudioProcessor::~DreamControlAudioProcessor()
 {
-	midiInput->stop();
+	if (midiInput != NULL) midiInput->stop();
 	stopTimer();
 	delete lufsProcessor;
-	delete midiInput;
-	delete midiOutput;
+	if (midiInput != NULL) delete midiInput;
+	if (midiOutput != NULL) delete midiOutput;
 }
 
 //==============================================================================
@@ -489,18 +502,21 @@ void DreamControlAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBu
 	// Perform LUFS and True Peak measurements.
 	lufsProcessor->processBlock(buffer);
 
-	// Monitor/ref/dim gain.
-	float currentGainDb = dimMode->get() ? dimLevel->get() : refMode->get() ? refLevel->get() : monitorLevel->get();
+	if (!useExternalVolControl->get()) 
+	{
+		// Monitor/ref/dim gain.
+		float currentGainDb = dimMode->get() ? dimLevel->get() : refMode->get() ? refLevel->get() : monitorLevel->get();
 
-	// Set gain, or mute
-	if (muteMode->get() || currentGainDb <= LOWEST_VOLUME_VALUE)
-	{
-		buffer.clear();
-	} 
-	else
-	{
-		float gain = Decibels::decibelsToGain(currentGainDb);
-		buffer.applyGain(gain);
+		// Set gain, or mute
+		if (muteMode->get() || currentGainDb <= LOWEST_VOLUME_VALUE)
+		{
+			buffer.clear();
+		}
+		else
+		{
+			float gain = Decibels::decibelsToGain(currentGainDb);
+			buffer.applyGain(gain);
+		}
 	}
 }
 
@@ -508,6 +524,29 @@ void DreamControlAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBu
 // Callback executed every 10ms.
 void DreamControlAudioProcessor::hiResTimerCallback()
 {
+	// If external volume control enabled, send MIDI.
+	if (midiOutputToVolControl != NULL && useExternalVolControl->get())
+	{
+		// Monitor/mute/ref/dim value.
+		float level = dimMode->get() ? dimLevel->get() : refMode->get() ? refLevel->get() : monitorLevel->get();
+		if (muteMode->get()) level = LOWEST_VOLUME_VALUE;
+
+		if (currentExternalVolumeLevel != level)
+		{
+			// Look up RME TotalMix fader MIDI value using our curve vector.
+			std::vector<float>::const_iterator index = std::lower_bound(RME_TOTALMIX_FADER_CURVE.begin(), RME_TOTALMIX_FADER_CURVE.end(), level);
+			int levelMidiVal = (index - RME_TOTALMIX_FADER_CURVE.begin());
+			if (level <= LOWEST_VOLUME_VALUE + 0.5) levelMidiVal = 0;
+
+			// Send volume control MIDI message.
+			MidiMessage msg = MidiMessage::controllerEvent(1, 7, levelMidiVal);
+			midiOutputToVolControl->sendMessageNow(msg);
+
+			// Store the current value so we don't constantly transmit unnecessary MIDI.
+			currentExternalVolumeLevel = level;
+		}
+	}
+
 	// LUFS meter.
 	lufsProcessor->update();
 	const int validSize = lufsProcessor->getValidSize();
@@ -680,6 +719,12 @@ void DreamControlAudioProcessor::handleIncomingMidiMessage(MidiInput* source, co
 			
 		}
 	}
+	else if (m.isControllerOfType(7))
+	{
+		// Volume control.
+		float volume = ((m.getControllerValue()) / VOLUME_CONTROL_MIDI_RANGE);
+		monitorLevel->setValueNotifyingHost(volume);
+	}
 	else if (m.isNoteOn(false) && m.getVelocity() == 127)
 	{
 		// Toggle parameter value on button press.
@@ -733,7 +778,10 @@ void DreamControlAudioProcessor::setStateInformation(const void* data, int sizeI
 {
 	MemoryInputStream stream(data, static_cast<size_t> (sizeInBytes), false);
 
-	*monitorLevel = stream.readFloat();
+	float volLevel = stream.readFloat();
+	if (volLevel < LOWEST_VOLUME_VALUE) volLevel = LOWEST_VOLUME_VALUE;
+	*monitorLevel = volLevel;
+
 	muteMode->setValueNotifyingHost(stream.readBool());
 	dimMode->setValueNotifyingHost(stream.readBool());
 	refMode->setValueNotifyingHost(stream.readBool());

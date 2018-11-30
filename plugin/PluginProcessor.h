@@ -80,6 +80,7 @@ private:
 	// Main
 	MidiOutput* midiOutput;
 	MidiInput* midiInput;
+	MidiOutput* midiOutputToVolControl;
 
     //==============================================================================
 	// Level
@@ -90,6 +91,9 @@ private:
 	AudioParameterBoolNotify* muteMode;
 	AudioParameterBoolNotify* dimMode;
 	AudioParameterBoolNotify* refMode;
+
+	AudioParameterBool* useExternalVolControl;
+	float currentExternalVolumeLevel;
 
 	//==============================================================================
 	// Meters
