@@ -16,6 +16,7 @@ Currently, the system is designed for my DAW of choice which is **Cubase**, and 
  - Switch between 4 sets of monitor speakers
  - Monitor level knob (ALPS endless encoder) with 16x RGB LED ring to show position. 48dB range in 1dB steps (3 brightness levels per LED)
  - No analog electronics required - converters can be connected directly to monitors for cleanest signal path
+ - Monitor level attentuation in plugin, or using external MIDI-controlled device, e.g. RME TotalMix.
  - Monitor Mute, Dim and Reference options (dim and reference levels adjustable in plugin)
  - Mono mode, Side Band Solo, and 'Loud' mode (an inverted Fletcher-Munson EQ curve that sounds a bit like Yamaha NS10M monitors)
  - Low, Low-Mid, High-Mid and High frequency band solo (crossover points adjustable in plugin)
