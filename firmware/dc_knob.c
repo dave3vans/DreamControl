@@ -33,7 +33,7 @@
 #define LED_RING_SIZE 16                                // Number of LEDs in our encoder ring.
 #define LED_RING_START_INDEX 45                         // The start index of the first LED.
 #define LED_RING_OFFSET -5                              // Depending on how the led ring board is mounted, the first LED may not be at the '-45' position.
-#define LED_RING_BRIGHTNESS_OFFSET 0                    // The LED ring might have slightly different brightness, so we can adjust that here.
+#define LED_RING_BRIGHTNESS_OFFSET -0.01                // The LED ring might have slightly different brightness, so we can adjust that here.
 
 /////////////////////////////////////////////////////////////////////////////
 // local variables

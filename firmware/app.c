@@ -115,11 +115,11 @@ void APP_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t midi_
     // Toggle Status LED on MIDI received.
     MIOS32_BOARD_LED_Set(0x0001, ~MIOS32_BOARD_LED_Get());
 
-    // Forward USB2<->UART0 (J11E M0). This port is used for calibrating/updating the MF board.
-    if (port == USB2)    
+    // Forward USB3<->UART0 (J11E M0). This port is used for calibrating/updating the MF board.
+    if (port == MF_CALIBRATION_USB_PORT)    
         MIOS32_MIDI_SendPackage(UART0, midi_package);    
     else if (port == UART0)    
-        MIOS32_MIDI_SendPackage(USB2, midi_package);   
+        MIOS32_MIDI_SendPackage(MF_CALIBRATION_USB_PORT, midi_package);   
 
     // Pass MIDI package on to other modules.
     DC_BUTTONS_MIDI_NotifyPackage(port, midi_package);

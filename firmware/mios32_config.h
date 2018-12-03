@@ -24,6 +24,6 @@
 #define MIOS32_USB_PRODUCT_ID   0x03f1                  
 #define MIOS32_USB_VERSION_ID   0x0100                  // v1.00
 
-#define MIOS32_USB_MIDI_NUM_PORTS 3
+#define MIOS32_USB_MIDI_NUM_PORTS 4
 
 #endif /* _MIOS32_CONFIG_H */

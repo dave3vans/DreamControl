@@ -33,7 +33,7 @@
 
 #define MIDI_OUT_PORT_NAME "MIDIOUT2 (DreamControl)"				// Direct MIDI connection to our hardware.
 #define MIDI_IN_PORT_NAME "MIDIIN2 (DreamControl)"					
-#define MIDI_OUT_VOL_CONTROL_PORT_NAME "DreamControl Loopback"		// MIDI connection to an external volume control, currently RME TotalMix
+#define MIDI_OUT_VOL_CONTROL_PORT_NAME "Loopback (DreamControl)"	// MIDI connection to an external volume control, currently RME TotalMix
 
 const int sysexManufacturerId[3] = { 0x00, 0x21, 0x69 };			// Our SysEx manufacturer ID.
 
@@ -61,6 +61,12 @@ enum midiNoteCommand {
 	BUTTON_1DB_PEAK_SCALE = 49
 };
 
+// RME TotalMix monitor output assignments, corresponds to index of hardware output in TotalMix. { MAIN, ALT1, ALT2, ALT3 }
+// ///////////////////////////////////////////////////////
+// TODO: This is currently hardcoded for Dave's studio setup! In future we want to be able to select this in the plugin UI.
+//       Output faders in TotalMix: AES, ADAT13/14, ADAT15/16 corresponding to MAIN, ALT1, ALT2 monitors.
+// ///////////////////////////////////////////////////////
+const std::vector<int> rmeTotalMixMidiChannelControllers = { 17, 7, 8, -1 };
 
 //==============================================================================
 DreamControlAudioProcessor::DreamControlAudioProcessor()
@@ -538,9 +544,20 @@ void DreamControlAudioProcessor::hiResTimerCallback()
 			int levelMidiVal = (index - RME_TOTALMIX_FADER_CURVE.begin());
 			if (level <= LOWEST_VOLUME_VALUE + 0.5) levelMidiVal = 0;
 
-			// Send volume control MIDI message.
-			MidiMessage msg = MidiMessage::controllerEvent(1, 7, levelMidiVal);
-			midiOutputToVolControl->sendMessageNow(msg);
+			// Send volume control MIDI messages.
+			// TODO: Implement monitor switching here also! We need the monitor select value from the hardware though.
+			for (int i = 0; i < rmeTotalMixMidiChannelControllers.size(); i++)
+			{
+				int rmeChan = rmeTotalMixMidiChannelControllers[i];
+				if (rmeChan == -1) continue;
+
+				// Get MIDI channel and CC for TotalMix hardware output fader.
+				int midiChan = floor((rmeChan - 1) / 8) + 9;
+				int midiCC = (((rmeChan - 1) % 8) * 2) + 102;
+
+				MidiMessage msg = MidiMessage::controllerEvent(midiChan, midiCC, levelMidiVal);
+				midiOutputToVolControl->sendMessageNow(msg);
+			}
 
 			// Store the current value so we don't constantly transmit unnecessary MIDI.
 			currentExternalVolumeLevel = level;
@@ -772,6 +789,7 @@ void DreamControlAudioProcessor::getStateInformation(MemoryBlock& destData)
 	stream.writeFloat(refLevel->get());
 	stream.writeFloat(peakHoldSeconds->get());
 	stream.writeBool(*volModMode);
+	stream.writeBool(*useExternalVolControl);
 }
 
 void DreamControlAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
@@ -797,6 +815,7 @@ void DreamControlAudioProcessor::setStateInformation(const void* data, int sizeI
 	*refLevel = stream.readFloat();
 	*peakHoldSeconds = stream.readFloat();
 	volModMode->setValueNotifyingHost(stream.readBool());
+	useExternalVolControl->setValueNotifyingHost(stream.readBool());
 }
 
 //==============================================================================
