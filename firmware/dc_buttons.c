@@ -149,74 +149,81 @@ typedef enum {
     LED_TALK = 24
 } led_t;
 
+typedef enum {
+    PORT_NONE = 0,
+    PORT_PLUGIN = 1,
+    PORT_DAW = 2,
+} port_t;
+
 /////////////// BUTTON MIDI NOTE MAPPINGS
 
-// Some functions are handled directly by the DAW's remote mapping, others are handled by the plugin.
-// This is to simplify MIDI mapping in the DAW.
-// Array index: 0 = MIDI port, 1 = Button number, 2 = LED number... etc.
+// Some functions are only handled by the plugin, others only by the DAW, and lots are handled by both
+// (this is to allow directly controlling the DAW via MIDI, and for the plugin to translate e.g. OSC for Reaper integration).
+
+// Array index: 0 = Port to send/receive (bitfield: 0=none, 1=plugin, 2=daw, 3=both), 1 = Button number, 2 = LED number... etc.
 // -1 means no LED for that button. >=35 are shifted functions.
 
-const int midi_button_led_map[171] = {            // MIDI note number
-    PLUGIN_USB_PORT, BUTTON_LOUD, LED_LOUD,       // 0
-    PLUGIN_USB_PORT, BUTTON_MONO, LED_MONO,       // 1
-    PLUGIN_USB_PORT, BUTTON_SIDE, LED_SIDE,       // 2
-    PLUGIN_USB_PORT, BUTTON_LOW, LED_LOW,         // 3
-    PLUGIN_USB_PORT, BUTTON_LOMID, LED_LOMID,     // 4
-    PLUGIN_USB_PORT, BUTTON_HIMID, LED_HIMID,     // 5
-    PLUGIN_USB_PORT, BUTTON_HIGH, LED_HIGH,       // 6
-    DAW_USB_PORT, BUTTON_MIX, LED_MIX,            // 7
-    DAW_USB_PORT, BUTTON_CUE1, LED_CUE1,          // 8
-    DAW_USB_PORT, BUTTON_CUE2, LED_CUE2,          // 9
-    DAW_USB_PORT, BUTTON_CUE3, LED_CUE3,          // 10
-    DAW_USB_PORT, BUTTON_CUE4, LED_CUE4,          // 11
-    DAW_USB_PORT, BUTTON_EXT1, LED_EXT1,          // 12
-    DAW_USB_PORT, BUTTON_EXT2, LED_EXT2,          // 13
-    DAW_USB_PORT, BUTTON_MAIN, LED_MAIN,          // 14
-    DAW_USB_PORT, BUTTON_ALT1, LED_ALT1,          // 15
-    DAW_USB_PORT, BUTTON_ALT2, LED_ALT2,          // 16
-    DAW_USB_PORT, BUTTON_ALT3, LED_ALT3,          // 17
-    PLUGIN_USB_PORT, BUTTON_MONMUTE, LED_MONMUTE, // 18
-    PLUGIN_USB_PORT, BUTTON_DIM, LED_DIM,         // 19
-    PLUGIN_USB_PORT, BUTTON_REF, LED_REF,         // 20
-    DAW_USB_PORT, BUTTON_RETURN, LED_RETURN,      // 21
-    DAW_USB_PORT, BUTTON_LOOP, LED_LOOP,          // 22
-    DAW_USB_PORT, BUTTON_BACK, -1,                // 23
-    DAW_USB_PORT, BUTTON_FORWARD, -1,             // 24
-    DAW_USB_PORT, BUTTON_PLAY, LED_PLAY,          // 25
-    DAW_USB_PORT, BUTTON_STOP, LED_STOP,          // 26
-    DAW_USB_PORT, BUTTON_CLICK, LED_CLICK,        // 27
-    DAW_USB_PORT, BUTTON_RECORD, LED_RECORD,      // 28
-    -1, BUTTON_SHIFT, -1,                         // 29
-    DAW_USB_PORT, BUTTON_MUTE, LED_MUTE,          // 30
-    DAW_USB_PORT, BUTTON_SOLO, LED_SOLO,          // 31
-    DAW_USB_PORT, BUTTON_READ, LED_READ,          // 32
-    DAW_USB_PORT, BUTTON_WRITE, LED_WRITE,        // 33
-    DAW_USB_PORT, BUTTON_TALK, LED_TALK,          // 34
+const int midi_button_led_map[171] = {                      // MIDI note number
+    PORT_PLUGIN, BUTTON_LOUD, LED_LOUD,                     // 0
+    PORT_PLUGIN, BUTTON_MONO, LED_MONO,                     // 1
+    PORT_PLUGIN, BUTTON_SIDE, LED_SIDE,                     // 2
+    PORT_PLUGIN, BUTTON_LOW, LED_LOW,                       // 3
+    PORT_PLUGIN, BUTTON_LOMID, LED_LOMID,                   // 4
+    PORT_PLUGIN, BUTTON_HIMID, LED_HIMID,                   // 5
+    PORT_PLUGIN, BUTTON_HIGH, LED_HIGH,                     // 6
+    PORT_DAW | PORT_PLUGIN, BUTTON_MIX, LED_MIX,            // 7
+    PORT_DAW | PORT_PLUGIN, BUTTON_CUE1, LED_CUE1,          // 8
+    PORT_DAW | PORT_PLUGIN, BUTTON_CUE2, LED_CUE2,          // 9
+    PORT_DAW | PORT_PLUGIN, BUTTON_CUE3, LED_CUE3,          // 10
+    PORT_DAW | PORT_PLUGIN, BUTTON_CUE4, LED_CUE4,          // 11
+    PORT_DAW | PORT_PLUGIN, BUTTON_EXT1, LED_EXT1,          // 12
+    PORT_DAW | PORT_PLUGIN, BUTTON_EXT2, LED_EXT2,          // 13
+    PORT_DAW | PORT_PLUGIN, BUTTON_MAIN, LED_MAIN,          // 14
+    PORT_DAW | PORT_PLUGIN, BUTTON_ALT1, LED_ALT1,          // 15
+    PORT_DAW | PORT_PLUGIN, BUTTON_ALT2, LED_ALT2,          // 16
+    PORT_DAW | PORT_PLUGIN, BUTTON_ALT3, LED_ALT3,          // 17
+    PORT_PLUGIN, BUTTON_MONMUTE, LED_MONMUTE,               // 18
+    PORT_PLUGIN, BUTTON_DIM, LED_DIM,                       // 19
+    PORT_PLUGIN, BUTTON_REF, LED_REF,                       // 20
+    PORT_DAW | PORT_PLUGIN, BUTTON_RETURN, LED_RETURN,      // 21
+    PORT_DAW | PORT_PLUGIN, BUTTON_LOOP, LED_LOOP,          // 22
+    PORT_DAW | PORT_PLUGIN, BUTTON_BACK, -1,                // 23
+    PORT_DAW | PORT_PLUGIN, BUTTON_FORWARD, -1,             // 24
+    PORT_DAW | PORT_PLUGIN, BUTTON_PLAY, LED_PLAY,          // 25
+    PORT_DAW | PORT_PLUGIN, BUTTON_STOP, LED_STOP,          // 26
+    PORT_DAW | PORT_PLUGIN, BUTTON_CLICK, LED_CLICK,        // 27
+    PORT_DAW | PORT_PLUGIN, BUTTON_RECORD, LED_RECORD,      // 28
+    PORT_NONE, BUTTON_SHIFT, -1,                            // 29
+    PORT_DAW | PORT_PLUGIN, BUTTON_MUTE, LED_MUTE,          // 30
+    PORT_DAW | PORT_PLUGIN, BUTTON_SOLO, LED_SOLO,          // 31
+    PORT_DAW | PORT_PLUGIN, BUTTON_READ, LED_READ,          // 32
+    PORT_DAW | PORT_PLUGIN, BUTTON_WRITE, LED_WRITE,        // 33
+    PORT_DAW | PORT_PLUGIN, BUTTON_TALK, LED_TALK,          // 34
 
-    PLUGIN_USB_PORT, BUTTON_RESET_METER, -1,      // 35     Shifted
-    PLUGIN_USB_PORT, BUTTON_PEAK_LUFS, -1,        // 36
-    PLUGIN_USB_PORT, BUTTON_ABS_REL, -1,          // 37
-    DAW_USB_PORT, BUTTON_SAVE, -1,                // 38
-    DAW_USB_PORT, BUTTON_LOOP1, -1,               // 39
-    DAW_USB_PORT, BUTTON_LOOP2, -1,               // 40
-    DAW_USB_PORT, BUTTON_LOOP8, -1,               // 41
-    DAW_USB_PORT, BUTTON_LOOP16, -1,              // 42
-    DAW_USB_PORT, BUTTON_MUTE_CLEAR, -1,          // 43
-    DAW_USB_PORT, BUTTON_SOLO_CLEAR, -1,          // 44
-    PLUGIN_USB_PORT, BUTTON_VOL_MOD, -1,          // 45
-    PLUGIN_USB_PORT, BUTTON_READ_ALL, -1,         // 46
-    PLUGIN_USB_PORT, BUTTON_WRITE_ALL, -1,        // 47
+    PORT_PLUGIN, BUTTON_RESET_METER, -1,                    // 35     Shifted
+    PORT_PLUGIN, BUTTON_PEAK_LUFS, -1,                      // 36
+    PORT_PLUGIN, BUTTON_ABS_REL, -1,                        // 37
+    PORT_DAW | PORT_PLUGIN, BUTTON_SAVE, -1,                // 38
+    PORT_DAW | PORT_PLUGIN, BUTTON_LOOP1, -1,               // 39
+    PORT_DAW | PORT_PLUGIN, BUTTON_LOOP2, -1,               // 40
+    PORT_DAW | PORT_PLUGIN, BUTTON_LOOP8, -1,               // 41
+    PORT_DAW | PORT_PLUGIN, BUTTON_LOOP16, -1,              // 42
+    PORT_DAW | PORT_PLUGIN, BUTTON_MUTE_CLEAR, -1,          // 43
+    PORT_DAW | PORT_PLUGIN, BUTTON_SOLO_CLEAR, -1,          // 44
+    PORT_PLUGIN, BUTTON_VOL_MOD, -1,                        // 45
+    PORT_DAW | PORT_PLUGIN, BUTTON_READ_ALL, -1,            // 46
+    PORT_DAW | PORT_PLUGIN, BUTTON_WRITE_ALL, -1,           // 47
 
-    PLUGIN_USB_PORT, BUTTON_3RD_METER_IS_MOMENTARY, -1,      // 48   
-    PLUGIN_USB_PORT, BUTTON_1DB_PEAK_SCALE, -1,              // 49
+    PORT_PLUGIN, BUTTON_3RD_METER_IS_MOMENTARY, -1,         // 48   
+    PORT_PLUGIN, BUTTON_1DB_PEAK_SCALE, -1,                 // 49
 
-    DAW_USB_PORT, BUTTON_MIX, -1,                 // 50   Send additional MIDI notes for MIX/CUE buttons.
-    DAW_USB_PORT, BUTTON_CUE1, -1,                // 51     
-    DAW_USB_PORT, BUTTON_CUE2, -1,                // 52
-    DAW_USB_PORT, BUTTON_CUE3, -1,                // 53
-    DAW_USB_PORT, BUTTON_CUE4, -1,                // 54
-    DAW_USB_PORT, BUTTON_EXT1, -1,                // 55
-    DAW_USB_PORT, BUTTON_EXT2, -1,                // 59
+    PORT_DAW, BUTTON_MIX, -1,                               // 50   Send additional MIDI notes for MIX/CUE buttons.
+    PORT_DAW, BUTTON_CUE1, -1,                              // 51   (this is for also switching the headphone output in Cubase Control Room).
+    PORT_DAW, BUTTON_CUE2, -1,                              // 52
+    PORT_DAW, BUTTON_CUE3, -1,                              // 53
+    PORT_DAW, BUTTON_CUE4, -1,                              // 54
+    PORT_DAW, BUTTON_EXT1, -1,                              // 55
+    PORT_DAW, BUTTON_EXT2, -1,                              // 56
 };
 
 u16 current_j10_state;
@@ -303,7 +310,11 @@ void DC_BUTTONS_ButtonChanged(u32 button, u8 state)
         {
             MIOS32_MIDI_SendDebugMessage("MIDI OUT   port %d   val1 %d   val2 %d", midi_button_led_map[i], index, state);
 
-            MIOS32_MIDI_SendNoteOn(midi_button_led_map[i], Chn1, index, state == 1 ? 127 : 0);
+            if (midi_button_led_map[i] & PORT_PLUGIN > 0)
+                MIOS32_MIDI_SendNoteOn(PLUGIN_USB_PORT, Chn1, index, state == 1 ? 127 : 0);
+
+            if (midi_button_led_map[i] & PORT_DAW > 0)
+                MIOS32_MIDI_SendNoteOn(DAW_USB_PORT, Chn1, index, state == 1 ? 127 : 0);
 
             if (midi_button_led_map[i + 1] == BUTTON_RETURN)
                 MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], state);
@@ -322,7 +333,9 @@ void DC_BUTTONS_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_
     // Turn on/off an LED if corresponding NoteOn value received.
     if (midi_package.chn == Chn1 && midi_package.type == NoteOn)
     {
-        if (midi_package.note < (sizeof(midi_button_led_map) / 4 / 3) && port == midi_button_led_map[midi_package.note * 3])
+        if (midi_package.note < (sizeof(midi_button_led_map) / 4 / 3) && 
+        ((port == PLUGIN_USB_PORT && midi_button_led_map[midi_package.note * 3] & PORT_PLUGIN > 0) || 
+        (port == DAW_USB_PORT && midi_button_led_map[midi_package.note * 3] & PORT_DAW > 0)))
         {
             int led_pin = midi_button_led_map[(midi_package.note * 3) + 2];
             MIOS32_MIDI_SendDebugMessage("LED PIN  %d   = %d", led_pin, midi_package.velocity > 0 ? 1 : 0);

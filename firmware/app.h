@@ -31,7 +31,6 @@
 #define LED_BRIGHTNESS 0.03f            // **** DANGER ** DO NOT ALTER THIS. MAY EXCEED CURRENT RATING OF POWER SUPPLY *******
                                         // Values below 0.02 can cause incorrect colours to be displayed.
 
-
 /////////////////////////////////////////////////////////////////////////////
 // Global Types
 /////////////////////////////////////////////////////////////////////////////

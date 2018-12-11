@@ -21,7 +21,7 @@
 
 #pragma once 
 
-#include "JuceLibraryCode/JuceHeader.h"
+#include "../JuceLibraryCode/JuceHeader.h"
 
 #define LUFS_TP_MAX_NB_CHANNELS 2
 

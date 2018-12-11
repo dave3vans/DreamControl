@@ -29,7 +29,7 @@
 
 u8 current_mf_value_msb = -1;                           // if -1, we're waiting for a new value's MSB, 
                                                         // otherwise we're waiting for the corresponding LSB.
-u8 current_daw_channel_value_msb = -1;
+u8 current_daw_channel_value_lsb = -1;
 u8 daw_channel_nrpn_is_next = -1;
 
 
@@ -49,32 +49,44 @@ void DC_FADER_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t 
         }
         else if (midi_package.cc_number == MF_VALUE_CC_LSB && current_mf_value_msb > -1)
         {
-            // Convert to NRPN for DAW
+            // Convert to NRPN for DAW and plugin.
             MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, 99, 0);
             MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, 98, MF_VALUE_NRPN_LSB);
+            MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, 38, 127 - midi_package.value);
             MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, 6, 127 - current_mf_value_msb);
-            MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, 38, 127 - midi_package.value);        
+
+            MIOS32_MIDI_SendCC(PLUGIN_USB_PORT, Chn1, 99, 0);
+            MIOS32_MIDI_SendCC(PLUGIN_USB_PORT, Chn1, 98, MF_VALUE_NRPN_LSB);
+            MIOS32_MIDI_SendCC(PLUGIN_USB_PORT, Chn1, 38, 127 - midi_package.value);        
+            MIOS32_MIDI_SendCC(PLUGIN_USB_PORT, Chn1, 6, 127 - current_mf_value_msb);
+
             current_mf_value_msb = -1;
         }
+        else if (midi_package.cc_number == MF_TOUCH_CC)
+        {
+            // Send fader touch sense to DAW and plugin.
+            MIOS32_MIDI_SendCC(DAW_USB_PORT, Chn1, MF_TOUCH_CC, midi_package.value);
+            MIOS32_MIDI_SendCC(PLUGIN_USB_PORT, Chn1, MF_TOUCH_CC, midi_package.value);
+        }
     }
-
+ 
     // Receive from DAW, transmit to MF board.
-    if (port == DAW_USB_PORT && midi_package.chn == Chn1 && midi_package.type == CC)
+    if ((port == PLUGIN_USB_PORT || port == DAW_USB_PORT) && midi_package.chn == Chn1 && midi_package.type == CC)
     {
         if (midi_package.cc_number == 98 && midi_package.value == MF_VALUE_NRPN_LSB)       // 98 = NRPN LSB
         {
             daw_channel_nrpn_is_next = 1;
         }
-        else if (midi_package.cc_number == 6 && daw_channel_nrpn_is_next == 1)             // 6 = Data Entry MSB
+        else if (midi_package.cc_number == 38 && daw_channel_nrpn_is_next == 1)            // 38 = Data Entry LSB
         {
-            current_daw_channel_value_msb = midi_package.value;           
+            current_daw_channel_value_lsb = midi_package.value;           
         }
-        else if (midi_package.cc_number == 38 && current_daw_channel_value_msb > -1)       // 38 = Data Entry LSB
+        else if (midi_package.cc_number == 6 && current_daw_channel_value_lsb > -1)        // 6 = Data Entry MSB
         {
             // Convert to CC for MF board
-            MIOS32_MIDI_SendCC(UART0, Chn1, MF_VALUE_CC_MSB, 127 - current_daw_channel_value_msb);
-            MIOS32_MIDI_SendCC(UART0, Chn1, MF_VALUE_CC_LSB, 127 - midi_package.value);
-            current_daw_channel_value_msb = -1;
+            MIOS32_MIDI_SendCC(UART0, Chn1, MF_VALUE_CC_MSB, 127 - midi_package.value);
+            MIOS32_MIDI_SendCC(UART0, Chn1, MF_VALUE_CC_LSB, 127 - current_daw_channel_value_lsb);
+            current_daw_channel_value_lsb = -1;
             daw_channel_nrpn_is_next = -1;
         }
     }

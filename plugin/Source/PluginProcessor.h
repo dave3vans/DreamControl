@@ -19,7 +19,7 @@
 #include <array>
 #include <map>
 
-#include "JuceLibraryCode/JuceHeader.h"
+#include "../JuceLibraryCode/JuceHeader.h"
 #include "AudioParameterBoolNotify.h"
 #include "LufsProcessor.h"
 #include "CrossoverFilter.h"
@@ -29,11 +29,14 @@
 */
 class DreamControlAudioProcessor :  public AudioProcessor,
 									public HighResolutionTimer,
-									public MidiInputCallback
+									public MidiInputCallback, 
+									public OSCReceiver,
+									public OSCReceiver::Listener<OSCReceiver::MessageLoopCallback>
 {
 public:
 	//==============================================================================
-	std::map<int, AudioParameterBoolNotify*> button_param_map;
+	std::map<int, AudioParameterBoolNotify*> buttonParamMap;
+	std::map<int, String> reaperOscButtonMap;
 
     //==============================================================================
     DreamControlAudioProcessor();
@@ -51,6 +54,10 @@ public:
 	void hiResTimerCallback() override;
 	bool isAnyBandSolo();
 	void handleIncomingMidiMessage (MidiInput* source, const MidiMessage& m) override;
+	void oscMessageReceived(const OSCMessage& message) override;
+	void oscBundleReceived(const OSCBundle& bundle) override;
+
+	OSCSender reaperOscSender;
 
     //==============================================================================
     AudioProcessorEditor* createEditor() override;
@@ -93,7 +100,16 @@ private:
 	AudioParameterBoolNotify* refMode;
 
 	AudioParameterBool* useExternalVolControl;
-	float currentExternalVolumeLevel;
+	void updateExternalVolumeControl();
+	int currentMonitorSelect = 0;
+
+	AudioParameterBool* useReaperOsc;
+	MidiRPNDetector* faderRpnDetector;
+
+	//==============================================================================
+	// Channel Strip
+	bool isReadEnabled;
+	bool isWriteEnabled;
 
 	//==============================================================================
 	// Meters

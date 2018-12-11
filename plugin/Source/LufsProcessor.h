@@ -21,7 +21,7 @@
 
 #pragma once 
 
-#include "JuceLibraryCode/JuceHeader.h"
+#include "../JuceLibraryCode/JuceHeader.h"
 #include "TruePeakProcessor.h"
 
 #define DEFAULT_MIN_VOLUME ( -100.f )
