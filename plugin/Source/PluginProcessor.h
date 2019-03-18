@@ -42,6 +42,8 @@ public:
     DreamControlAudioProcessor();
     ~DreamControlAudioProcessor();
 
+	std::unique_ptr<MidiOutput> midiOutputToVolControl;
+
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -58,6 +60,7 @@ public:
 	void oscBundleReceived(const OSCBundle& bundle) override;
 
 	OSCSender reaperOscSender;
+	bool oscConnected;
 
     //==============================================================================
     AudioProcessorEditor* createEditor() override;
@@ -87,7 +90,6 @@ private:
 	// Main
 	MidiOutput* midiOutput;
 	MidiInput* midiInput;
-	MidiOutput* midiOutputToVolControl;
 
     //==============================================================================
 	// Level
@@ -102,6 +104,7 @@ private:
 	AudioParameterBool* useExternalVolControl;
 	void updateExternalVolumeControl();
 	int currentMonitorSelect = 0;
+	int currentInputButton = 0;
 
 	AudioParameterBool* useReaperOsc;
 	MidiRPNDetector* faderRpnDetector;

@@ -13,7 +13,7 @@
 * ==========================================================================
 *
 *	TODO: This code has been written and expanded quickly so could do with refactoring.
-*		  e.g. move REAPER and TotalMix integration to separate classes.
+*		  e.g. move MIDI I/O, REAPER and TotalMix integration to separate classes.
 *
 */
 
@@ -155,19 +155,6 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 		midiInput = NULL;
 	}
 
-	// We support an optional external volume control (e.g. RME TotalMix) on a loopback MIDI port.
-	auto devs = MidiOutput::getDevices();
-	int volControlDeviceId = devs.indexOf(MIDI_OUT_VOL_CONTROL_PORT_NAME);
-	if (volControlDeviceId > -1)
-	{
-		midiOutputToVolControl = MidiOutput::openDevice(volControlDeviceId);
-	}
-	else
-	{
-		NativeMessageBox::showMessageBox(AlertWindow::AlertIconType::WarningIcon, "DreamControl", "Failed to open loopback MIDI port.");
-		midiOutputToVolControl = NULL;
-	}
-
 	// Lambda for handling when a mode toggle changes.
 	auto modeChangedFunction = [this](const String& paramName, bool newValue)
 	{
@@ -208,7 +195,7 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 		}
 
 	found_button:
-		if (midiOutput != NULL)
+		if (midiOutput != nullptr)
 			midiOutput->sendMessageNow(MidiMessage::noteOn(1, button, newValue ? 1.0f : 0.0f));
 	};
 
@@ -229,6 +216,7 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 			if (this->connect(REAPER_OSC_RECEIVE_PORT))
 			{
 				this->OSCReceiver::addListener(this);
+				oscConnected = true;
 			}
 			else
 			{
@@ -240,7 +228,35 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 		{
 			this->OSCReceiver::removeListener(this);
 			this->reaperOscSender.disconnect();
-			this->disconnect();
+			//if (oscConnected) this->disconnect();
+			oscConnected = false;
+		}
+	};
+
+	// Lambda for handling when external volume control is enabled/disabled.
+	auto externalVolControlChangedFunction = [this](const String& paramName, bool newValue)
+	{
+		// We support an optional external volume control (e.g. RME TotalMix) on a loopback MIDI port.
+		if (newValue == true)
+		{
+			auto devs = MidiOutput::getDevices();
+			int volControlDeviceId = devs.indexOf(MIDI_OUT_VOL_CONTROL_PORT_NAME);
+			if (volControlDeviceId > -1)
+			{
+				this->midiOutputToVolControl.reset(MidiOutput::openDevice(volControlDeviceId));
+			}
+			else
+			{
+				NativeMessageBox::showMessageBox(AlertWindow::AlertIconType::WarningIcon, "DreamControl", "Failed to open loopback MIDI port (must be named 'Loopback (DreamControl)'.");
+				this->midiOutputToVolControl = nullptr;
+			}
+		}
+		else
+		{
+			if (this->midiOutputToVolControl != nullptr)
+			{
+				this->midiOutputToVolControl.reset();
+			}
 		}
 	};
 
@@ -310,7 +326,7 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 	addParameter(peakHoldSeconds = new AudioParameterFloat("peakHold", "Peak Hold (seconds)", 0.0f, 10.0f, 5.0f));
 	addParameter(volModMode = new AudioParameterBoolNotify("volModMode", "Volume/Modulate Mode (dev)", false, modeChangedFunction));
 
-	addParameter(useExternalVolControl = new AudioParameterBool("useExternalVolControl", "RME TotalMix integration", 0));
+	addParameter(useExternalVolControl = new AudioParameterBoolNotify("useExternalVolControl", "RME TotalMix integration", false, externalVolControlChangedFunction));
 	addParameter(useReaperOsc = new AudioParameterBoolNotify("useReaperOsc", "REAPER OSC integration", false, reaperOscChangedFunction));
 
 	// Our map of button note numbers to plugin parameters.
@@ -335,7 +351,7 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 
 	// OSC address to button map, for REAPER integration.
 	reaperOscButtonMap = {
-		{ BUTTON_RETURN, "/action/40172" },
+		{ BUTTON_RETURN, "/action/40632" },
 		{ BUTTON_LOOP, "/repeat" },
 		{ BUTTON_BACK, "/action/40084" },
 		{ BUTTON_FORWARD, "/action/40085" },
@@ -347,7 +363,7 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 		{ BUTTON_SOLO, "/track/solo/toggle" },
 		{ BUTTON_READ, "/track/autoread" },
 		{ BUTTON_WRITE, "/track/autowrite" },
-		{ BUTTON_SAVE, "/action 40026" },
+		{ BUTTON_SAVE, "/action/40026" },
 		{ BUTTON_LOOP1, "" },
 		{ BUTTON_LOOP2, "" },
 		{ BUTTON_LOOP8, "" },
@@ -355,17 +371,42 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 		{ BUTTON_MUTE_CLEAR, "/action/40339" },
 		{ BUTTON_SOLO_CLEAR, "/action/40340" },
 		{ BUTTON_READ_ALL, "/action/40086" },
-		{ BUTTON_WRITE_ALL, "/action/40090" }
+		{ BUTTON_WRITE_ALL, "/action/40090" },
+		{ BUTTON_MIX, "/anysolo" },
+		{ BUTTON_CUE1, "/track/1/solo" },
+		{ BUTTON_CUE2, "/track/2/solo" },
+		{ BUTTON_CUE3, "/track/3/solo" },
+		{ BUTTON_CUE4, "/track/4/solo" },
+		{ BUTTON_EXT1, "/track/5/solo" },
+		{ BUTTON_EXT2, "/track/6/solo" }
 	};
+
+	if (midiOutput != nullptr && useExternalVolControl->get())
+	{
+		midiOutput->sendMessageNow(MidiMessage::noteOn(1, BUTTON_MAIN, 1.0f));
+		updateExternalVolumeControl();
+	}
+
+	if (midiOutput != nullptr)
+	{
+		midiOutput->sendMessageNow(MidiMessage::noteOn(1, BUTTON_MIX, 1.0f));
+		for (int i = BUTTON_CUE1; i <= BUTTON_EXT2; i++)
+			midiOutput->sendMessageNow(MidiMessage::noteOn(1, i, 0.0f));
+	}
 }
 
 DreamControlAudioProcessor::~DreamControlAudioProcessor()
 {
-	if (midiInput != NULL) midiInput->stop();
+	if (midiInput != nullptr) midiInput->stop();
 	stopTimer();
 	delete lufsProcessor;
-	if (midiInput != NULL) delete midiInput;
-	if (midiOutput != NULL) delete midiOutput;
+	if (midiInput != nullptr) delete midiInput;
+	if (midiOutput != nullptr) delete midiOutput;
+	if (midiOutputToVolControl != nullptr) midiOutputToVolControl.reset();
+
+	this->OSCReceiver::removeListener(this);
+	reaperOscSender.disconnect();
+	//if (oscConnected) this->disconnect();
 }
 
 //==============================================================================
@@ -687,7 +728,7 @@ void DreamControlAudioProcessor::hiResTimerCallback()
 	// Send MIDI SysEx packet to hardware with meter values.
 	// We send float values as 2 bytes, integral and fractional.
 	// This allows us a range of -99.99 to 0.00 dB, suitable for our meters. We could improve this.
-	if (midiOutput != NULL) {
+	if (midiOutput != nullptr) {
 		char* lufsSints = getMeterIntegralFractional(lufsSval);
 		char* lufsMints = getMeterIntegralFractional(lufsMval);
 		char* lufsIints = getMeterIntegralFractional(lufsIval);
@@ -801,7 +842,7 @@ void DreamControlAudioProcessor::handleIncomingMidiMessage(MidiInput* source, co
 		{
 			// Send all button values out.
 			for (auto p : buttonParamMap)	
-				if (midiOutput != NULL)
+				if (midiOutput != nullptr)
 					midiOutput->sendMessageNow(MidiMessage::noteOn(1, p.first, p.second->get() ? 1.0f : 0.0f));
 			
 		}
@@ -843,7 +884,27 @@ void DreamControlAudioProcessor::handleIncomingMidiMessage(MidiInput* source, co
 			{
 				auto address = it->second;
 				if (address == "") return;
-				
+
+				// Input select buttons.
+				if (button >= BUTTON_MIX && button <= BUTTON_EXT2)
+				{
+					for (int i = BUTTON_MIX; i <= BUTTON_EXT2; i++)
+						midiOutput->sendMessageNow(MidiMessage::noteOn(1, i, 0.0f));
+
+					if (button == BUTTON_MIX || currentInputButton == button)
+					{
+						address = "/anysolo";
+						currentInputButton = BUTTON_MIX;
+						midiOutput->sendMessageNow(MidiMessage::noteOn(1, BUTTON_MIX, 1.0f));
+					}
+					else 
+					{
+						reaperOscSender.send("/anysolo", 1.0f);
+						currentInputButton = button;
+						midiOutput->sendMessageNow(MidiMessage::noteOn(1, button, 1.0f));
+					}
+				}
+
 				// Special behaviour for automation read/write buttons, as REAPER has 4 different automation modes.
 				if (button == BUTTON_READ && isReadEnabled && isWriteEnabled)
 					reaperOscSender.send("/track/autowrite", 1.0f);
@@ -886,7 +947,7 @@ void DreamControlAudioProcessor::handleIncomingMidiMessage(MidiInput* source, co
 void DreamControlAudioProcessor::updateExternalVolumeControl()
 {
 	// If external volume control enabled, send MIDI.
-	if (midiOutputToVolControl != NULL && useExternalVolControl->get())
+	if (midiOutputToVolControl != nullptr && useExternalVolControl->get())
 	{
 		// Monitor/mute/ref/dim value.
 		float level = dimMode->get() ? dimLevel->get() : refMode->get() ? refLevel->get() : monitorLevel->get();
@@ -920,12 +981,21 @@ void DreamControlAudioProcessor::oscMessageReceived(const OSCMessage& message)
 	auto pattern = message.getAddressPattern().toString();
 	float value = message[0].getFloat32();
 
-	if (midiOutput != NULL)
+	if (midiOutput != nullptr)
 	{
 		if (pattern == "/track/volume")
 		{
 			// Track volume fader.
 			midiOutput->sendBlockOfMessagesNow(MidiRPNGenerator::generate(1, 1, static_cast<int>(value * 16383), true, true));
+		}
+		else if (pattern == "/anysolo")
+		{
+			if (value == 0.0f)
+			{
+				midiOutput->sendMessageNow(MidiMessage::noteOn(1, BUTTON_MIX, 1.0f));
+				for (int btn = BUTTON_CUE1; btn <= BUTTON_EXT2; btn++)
+					midiOutput->sendMessageNow(MidiMessage::noteOn(1, btn, 0.0f));
+			}
 		}
 		else if (pattern == "/track/autotrim" && value == 1.0f)
 		{
@@ -969,6 +1039,7 @@ void DreamControlAudioProcessor::oscMessageReceived(const OSCMessage& message)
 				else if (it->second == pattern)
 				{
 					int button = it->first;
+
 					midiOutput->sendMessageNow(MidiMessage::noteOn(1, button, value));
 					return;
 				}

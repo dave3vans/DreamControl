@@ -316,10 +316,10 @@ void DC_BUTTONS_ButtonChanged(u32 button, u8 state)
             if (midi_button_led_map[i] & PORT_DAW > 0)
                 MIOS32_MIDI_SendNoteOn(DAW_USB_PORT, Chn1, index, state == 1 ? 127 : 0);
 
-            if (midi_button_led_map[i + 1] == BUTTON_RETURN)
-                MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], state);
-            if (state == 1 && midi_button_led_map[i + 2] > -1) 
-                MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], 1 - MIOS32_DOUT_PinGet(midi_button_led_map[i + 2]));
+            //if (midi_button_led_map[i + 1] == BUTTON_RETURN)
+            //    MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], state);
+            //if (state == 1 && midi_button_led_map[i + 2] > -1) 
+            //    MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], 1 - MIOS32_DOUT_PinGet(midi_button_led_map[i + 2]));
         }
         
         index++;
