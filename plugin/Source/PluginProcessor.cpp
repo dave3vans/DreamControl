@@ -38,6 +38,7 @@
 #define MIDI_OUT_PORT_NAME "MIDIOUT2 (DreamControl)"				// Direct MIDI connection to our hardware.
 #define MIDI_IN_PORT_NAME "MIDIIN2 (DreamControl)"					
 #define MIDI_OUT_VOL_CONTROL_PORT_NAME "Loopback (DreamControl)"	// MIDI connection to an external volume control, currently RME TotalMix
+#define MIDI_OUT_SWITCHER_PORT_NAME "DreamControlSwitcher"			// MIDI connection to our monitor switcher relay unit
 #define MIDI_FADER_TOUCH_SENSE_CC 47
 
 #define REAPER_OSC_SEND_IP "127.0.0.1"
@@ -155,6 +156,17 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 		midiInput = NULL;
 	}
 
+	// Also try and connect to our DreamControlSwitcher unit if it's available.
+	int switcherOutputDeviceId = MidiOutput::getDevices().indexOf(MIDI_OUT_SWITCHER_PORT_NAME);
+	if (switcherOutputDeviceId > -1)
+	{
+		midiOutputToSwitcher = MidiOutput::openDevice(switcherOutputDeviceId);
+	}
+	else
+	{
+		midiOutputToSwitcher = NULL;
+	}
+
 	// Lambda for handling when a mode toggle changes.
 	auto modeChangedFunction = [this](const String& paramName, bool newValue)
 	{
@@ -233,10 +245,10 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 		}
 	};
 
-	// Lambda for handling when external volume control is enabled/disabled.
-	auto externalVolControlChangedFunction = [this](const String& paramName, bool newValue)
+	// Lambda for handling when RME volume control is enabled/disabled.
+	auto rmeVolControlChangedFunction = [this](const String& paramName, bool newValue)
 	{
-		// We support an optional external volume control (e.g. RME TotalMix) on a loopback MIDI port.
+		// We support an optional RME volume control (TotalMix) on a loopback MIDI port.
 		if (newValue == true)
 		{
 			auto devs = MidiOutput::getDevices();
@@ -326,7 +338,8 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 	addParameter(peakHoldSeconds = new AudioParameterFloat("peakHold", "Peak Hold (seconds)", 0.0f, 10.0f, 5.0f));
 	addParameter(volModMode = new AudioParameterBoolNotify("volModMode", "Volume/Modulate Mode (dev)", false, modeChangedFunction));
 
-	addParameter(useExternalVolControl = new AudioParameterBoolNotify("useExternalVolControl", "RME TotalMix integration", false, externalVolControlChangedFunction));
+	addParameter(useRMEVolControl = new AudioParameterBoolNotify("useRMEVolControl", "RME TotalMix integration", false, rmeVolControlChangedFunction));
+	addParameter(useRMEMonitorSwitch = new AudioParameterBool("useRMEMonitorSwitch", "RME TotalMix monitor switch", false));
 	addParameter(useReaperOsc = new AudioParameterBoolNotify("useReaperOsc", "REAPER OSC integration", false, reaperOscChangedFunction));
 
 	// Our map of button note numbers to plugin parameters.
@@ -381,10 +394,10 @@ DreamControlAudioProcessor::DreamControlAudioProcessor()
 		{ BUTTON_EXT2, "/track/6/solo" }
 	};
 
-	if (midiOutput != nullptr && useExternalVolControl->get())
+	if (midiOutput != nullptr && useRMEVolControl->get())
 	{
 		midiOutput->sendMessageNow(MidiMessage::noteOn(1, BUTTON_MAIN, 1.0f));
-		updateExternalVolumeControl();
+		updateRMEVolumeControl();
 	}
 
 	if (midiOutput != nullptr)
@@ -653,7 +666,7 @@ void DreamControlAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBu
 	// Perform LUFS and True Peak measurements.
 	lufsProcessor->processBlock(buffer);
 
-	if (!useExternalVolControl->get()) 
+	if (!useRMEVolControl->get()) 
 	{
 		// Monitor/ref/dim gain.
 		float currentGainDb = dimMode->get() ? dimLevel->get() : refMode->get() ? refLevel->get() : monitorLevel->get();
@@ -853,20 +866,35 @@ void DreamControlAudioProcessor::handleIncomingMidiMessage(MidiInput* source, co
 		float volume = ((m.getControllerValue()) / VOLUME_CONTROL_MIDI_RANGE);
 		monitorLevel->setValueNotifyingHost(volume);
 
-		updateExternalVolumeControl();
+		updateRMEVolumeControl();
 	}
 	else if (m.isNoteOn(false) && m.getVelocity() == 127
 		&& (m.getNoteNumber() == BUTTON_MAIN || m.getNoteNumber() == BUTTON_ALT1 || m.getNoteNumber() == BUTTON_ALT2 || m.getNoteNumber() == BUTTON_ALT3))
 	{
-		// Monitor select in external volume control mode.
+		// Monitor select.
+		int newMonitorSelect = m.getNoteNumber() - BUTTON_MAIN;
+
 		for (int i = BUTTON_MAIN; i <= BUTTON_ALT3; i++)
-			if (m.getNoteNumber() != i)
-				midiOutput->sendMessageNow(MidiMessage::noteOn(1, i, 0.0f));
-		midiOutput->sendMessageNow(MidiMessage::noteOn(1, m.getNoteNumber(), 1.0f));
+			midiOutput->sendMessageNow(MidiMessage::noteOn(1, i, 0.0f));
 
-		currentMonitorSelect = m.getNoteNumber() - BUTTON_MAIN;
+		if (newMonitorSelect == currentMonitorSelect)
+		{
+			// Monitors off (switches off relays in switcher unit).
+			currentMonitorSelect = -1;
+		}
+		else
+		{
+			currentMonitorSelect = newMonitorSelect;
+			midiOutput->sendMessageNow(MidiMessage::noteOn(1, m.getNoteNumber(), 1.0f));
+		}
 
-		updateExternalVolumeControl();
+		if (midiOutputToSwitcher != nullptr)
+		{
+			// If switcher unit present, send Note Ons to switch relays
+			midiOutputToSwitcher->sendMessageNow(MidiMessage::noteOn(1, currentMonitorSelect + 1, 127.0f));
+		}
+
+		updateRMEVolumeControl();
 	}
 	else if (m.isNoteOn(false) && m.getVelocity() == 127)
 	{
@@ -875,6 +903,29 @@ void DreamControlAudioProcessor::handleIncomingMidiMessage(MidiInput* source, co
 
 		if (this->buttonParamMap.count(button) > 0)
 			this->buttonParamMap[button]->setValueNotifyingHost(!this->buttonParamMap[button]->get());
+
+		// Input select buttons.
+		if (button >= BUTTON_MIX && button <= BUTTON_EXT2)
+		{
+			for (int i = BUTTON_MIX; i <= BUTTON_EXT2; i++)
+				midiOutput->sendMessageNow(MidiMessage::noteOn(1, i, 0.0f));
+
+			if (button == BUTTON_MIX || currentInputButton == button)
+			{
+				currentInputButton = BUTTON_MIX;
+				midiOutput->sendMessageNow(MidiMessage::noteOn(1, BUTTON_MIX, 1.0f));
+			}
+			else
+			{
+				currentInputButton = button;
+				midiOutput->sendMessageNow(MidiMessage::noteOn(1, button, 1.0f));
+			}
+		}
+
+		if (button >= BUTTON_MONMUTE && button <= BUTTON_REF)
+		{
+			updateRMEVolumeControl();
+		}
 
 		// Send OSC to REAPER on button press.
 		if (useReaperOsc->get())
@@ -888,20 +939,13 @@ void DreamControlAudioProcessor::handleIncomingMidiMessage(MidiInput* source, co
 				// Input select buttons.
 				if (button >= BUTTON_MIX && button <= BUTTON_EXT2)
 				{
-					for (int i = BUTTON_MIX; i <= BUTTON_EXT2; i++)
-						midiOutput->sendMessageNow(MidiMessage::noteOn(1, i, 0.0f));
-
 					if (button == BUTTON_MIX || currentInputButton == button)
 					{
 						address = "/anysolo";
-						currentInputButton = BUTTON_MIX;
-						midiOutput->sendMessageNow(MidiMessage::noteOn(1, BUTTON_MIX, 1.0f));
 					}
 					else 
 					{
 						reaperOscSender.send("/anysolo", 1.0f);
-						currentInputButton = button;
-						midiOutput->sendMessageNow(MidiMessage::noteOn(1, button, 1.0f));
 					}
 				}
 
@@ -944,10 +988,10 @@ void DreamControlAudioProcessor::handleIncomingMidiMessage(MidiInput* source, co
 	}
 }
 
-void DreamControlAudioProcessor::updateExternalVolumeControl()
+void DreamControlAudioProcessor::updateRMEVolumeControl()
 {
 	// If external volume control enabled, send MIDI.
-	if (midiOutputToVolControl != nullptr && useExternalVolControl->get())
+	if (midiOutputToVolControl != nullptr && useRMEVolControl->get())
 	{
 		// Monitor/mute/ref/dim value.
 		float level = dimMode->get() ? dimLevel->get() : refMode->get() ? refLevel->get() : monitorLevel->get();
@@ -968,9 +1012,12 @@ void DreamControlAudioProcessor::updateExternalVolumeControl()
 			int midiChan = floor((rmeChan - 1) / 8) + 9;
 			int midiCC = (((rmeChan - 1) % 8) * 2) + 102;
 
-			MidiMessage msg = MidiMessage::controllerEvent(midiChan, midiCC, (currentMonitorSelect == i) ? levelMidiVal : 0);
+			MidiMessage msg = MidiMessage::controllerEvent(midiChan, midiCC, (currentMonitorSelect == i || useRMEMonitorSwitch->get() == false) ? levelMidiVal : 0);
 			midiOutputToVolControl->sendMessageNow(msg);
-		}	
+
+			if (useRMEMonitorSwitch->get() == false && i > 0)
+				return;
+		}
 	}
 }
 
@@ -1091,7 +1138,7 @@ void DreamControlAudioProcessor::getStateInformation(MemoryBlock& destData)
 	stream.writeFloat(refLevel->get());
 	stream.writeFloat(peakHoldSeconds->get());
 	stream.writeBool(*volModMode);
-	stream.writeBool(*useExternalVolControl);
+	stream.writeBool(*useRMEVolControl);
 	stream.writeBool(*useReaperOsc);
 }
 
@@ -1118,7 +1165,7 @@ void DreamControlAudioProcessor::setStateInformation(const void* data, int sizeI
 	*refLevel = stream.readFloat();
 	*peakHoldSeconds = stream.readFloat();
 	volModMode->setValueNotifyingHost(stream.readBool());
-	useExternalVolControl->setValueNotifyingHost(stream.readBool());
+	useRMEVolControl->setValueNotifyingHost(stream.readBool());
 	useReaperOsc->setValueNotifyingHost(stream.readBool());
 }
 

@@ -90,6 +90,7 @@ private:
 	// Main
 	MidiOutput* midiOutput;
 	MidiInput* midiInput;
+	MidiOutput* midiOutputToSwitcher;
 
     //==============================================================================
 	// Level
@@ -101,8 +102,9 @@ private:
 	AudioParameterBoolNotify* dimMode;
 	AudioParameterBoolNotify* refMode;
 
-	AudioParameterBool* useExternalVolControl;
-	void updateExternalVolumeControl();
+	AudioParameterBool* useRMEVolControl;
+	AudioParameterBool* useRMEMonitorSwitch;
+	void updateRMEVolumeControl();
 	int currentMonitorSelect = 0;
 	int currentInputButton = 0;
 

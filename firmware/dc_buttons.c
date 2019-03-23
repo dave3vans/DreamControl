@@ -306,7 +306,9 @@ void DC_BUTTONS_ButtonChanged(u32 button, u8 state)
 
     for (i = 0; i < sizeof(midi_button_led_map) / 4; i += 3)
     {
-        if (midi_button_led_map[i + 1] == button + (is_shifted ? 1000 : 0))
+        int this_button = midi_button_led_map[i + 1];
+
+        if (this_button == button + (is_shifted ? 1000 : 0))
         {
             MIOS32_MIDI_SendDebugMessage("MIDI OUT   port %d   val1 %d   val2 %d", midi_button_led_map[i], index, state);
 
@@ -316,10 +318,14 @@ void DC_BUTTONS_ButtonChanged(u32 button, u8 state)
             if (midi_button_led_map[i] & PORT_DAW > 0)
                 MIOS32_MIDI_SendNoteOn(DAW_USB_PORT, Chn1, index, state == 1 ? 127 : 0);
 
-            //if (midi_button_led_map[i + 1] == BUTTON_RETURN)
-            //    MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], state);
-            //if (state == 1 && midi_button_led_map[i + 2] > -1) 
-            //    MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], 1 - MIOS32_DOUT_PinGet(midi_button_led_map[i + 2]));
+            // Toggle LEDs for channel strip buttons and transport buttons.
+            if (state == 1 && ((this_button >= BUTTON_MUTE && this_button <= BUTTON_WRITE)
+                              || (this_button >= BUTTON_PLAY && this_button <= BUTTON_RECORD)
+                              || this_button == BUTTON_LOOP))
+                MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], 1 - MIOS32_DOUT_PinGet(midi_button_led_map[i + 2]));
+
+            if (this_button == BUTTON_RETURN)
+                MIOS32_DOUT_PinSet(midi_button_led_map[i + 2], state);
         }
         
         index++;
