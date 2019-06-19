@@ -32,7 +32,7 @@
 
 #define LED_RING_SIZE 16                                // Number of LEDs in our encoder ring.
 #define LED_RING_START_INDEX 45                         // The start index of the first LED.
-#define LED_RING_OFFSET -5                              // Depending on how the led ring board is mounted, the first LED may not be at the '-45' position.
+#define LED_RING_OFFSET 5                               // Depending on how the led ring board is mounted, the first LED may not be at the '-45' position.
 #define LED_RING_BRIGHTNESS_OFFSET -0.01                // The LED ring might have slightly different brightness, so we can adjust that here.
 
 /////////////////////////////////////////////////////////////////////////////
@@ -158,17 +158,18 @@ void DC_KNOB_UpdateLedRing()
         else
         {
             v = 0.0;
-
-            if (led == 0 && value == 0)
-                v = 0.007f;             // If value is 0, leave one LED on very dimly.
+            // if (led == 0 && value == 0)
+            //     v = 0.007f;             // If value is 0, leave one LED on very dimly.
         }
 
         if (led_hue_override > -1 && v > 0.007f)
             v = v / 2.0f;
 
-        int led_index = LED_RING_START_INDEX + LED_RING_OFFSET + LED_RING_SIZE - 1 - led;
+        int led_index = LED_RING_START_INDEX + LED_RING_OFFSET + led;
         if (led_index < LED_RING_START_INDEX)
             led_index += LED_RING_SIZE;
+        else if (led_index >= LED_RING_START_INDEX + LED_RING_SIZE)
+            led_index -= LED_RING_SIZE;
 
         WS2812_LED_SetHSV(led_index, h, current_virtual_knob == 0 ? 1.0 : 0.0, v);      
     }

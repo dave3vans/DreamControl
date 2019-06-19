@@ -415,6 +415,7 @@ DreamControlAudioProcessor::~DreamControlAudioProcessor()
 	delete lufsProcessor;
 	if (midiInput != nullptr) delete midiInput;
 	if (midiOutput != nullptr) delete midiOutput;
+	if (midiOutputToSwitcher != nullptr) delete midiOutputToSwitcher;
 	if (midiOutputToVolControl != nullptr) midiOutputToVolControl.reset();
 
 	this->OSCReceiver::removeListener(this);
@@ -904,6 +905,57 @@ void DreamControlAudioProcessor::handleIncomingMidiMessage(MidiInput* source, co
 		if (this->buttonParamMap.count(button) > 0)
 			this->buttonParamMap[button]->setValueNotifyingHost(!this->buttonParamMap[button]->get());
 
+		if (button >= BUTTON_MONMUTE && button <= BUTTON_REF)
+		{
+			updateRMEVolumeControl();
+		}
+
+		// Send OSC to REAPER on button press.
+		if (useReaperOsc->get())
+		{
+			auto it = reaperOscButtonMap.find(button);
+			if (it != reaperOscButtonMap.end())
+			{
+				auto address = it->second;
+
+				if (address != "")
+				{
+					// Input select buttons.
+					if (button >= BUTTON_MIX && button <= BUTTON_EXT2)
+					{
+						if (button == BUTTON_MIX || currentInputButton == button)
+						{
+							address = "/anysolo";
+						}
+						else 
+						{
+							reaperOscSender.send("/anysolo", 1.0f);
+						}
+					}
+
+					// Special behaviour for automation read/write buttons, as REAPER has 4 different automation modes.
+					if (button == BUTTON_READ && isReadEnabled && isWriteEnabled)
+						reaperOscSender.send("/track/autowrite", 1.0f);
+					else if (button == BUTTON_READ && !isReadEnabled && isWriteEnabled)
+						reaperOscSender.send("/track/autotouch", 1.0f);
+					else if (button == BUTTON_READ && isReadEnabled && !isWriteEnabled)
+						reaperOscSender.send("/track/autotrim", 1.0f);
+					else if (button == BUTTON_READ && !isReadEnabled && !isWriteEnabled)
+						reaperOscSender.send("/track/autoread", 1.0f);
+					else if (button == BUTTON_WRITE && isReadEnabled && isWriteEnabled)
+						reaperOscSender.send("/track/autoread", 1.0f);
+					else if (button == BUTTON_WRITE && isReadEnabled && !isWriteEnabled)
+						reaperOscSender.send("/track/autotouch", 1.0f);
+					else if (button == BUTTON_WRITE && !isReadEnabled && isWriteEnabled)
+						reaperOscSender.send("/track/autotrim", 1.0f);
+					else if (button == BUTTON_WRITE && !isReadEnabled && !isWriteEnabled)
+						reaperOscSender.send("/track/autowrite", 1.0f);
+					else
+						reaperOscSender.send(address, 1.0f);
+				}
+			}
+		}
+
 		// Input select buttons.
 		if (button >= BUTTON_MIX && button <= BUTTON_EXT2)
 		{
@@ -919,55 +971,6 @@ void DreamControlAudioProcessor::handleIncomingMidiMessage(MidiInput* source, co
 			{
 				currentInputButton = button;
 				midiOutput->sendMessageNow(MidiMessage::noteOn(1, button, 1.0f));
-			}
-		}
-
-		if (button >= BUTTON_MONMUTE && button <= BUTTON_REF)
-		{
-			updateRMEVolumeControl();
-		}
-
-		// Send OSC to REAPER on button press.
-		if (useReaperOsc->get())
-		{
-			auto it = reaperOscButtonMap.find(button);
-			if (it != reaperOscButtonMap.end())
-			{
-				auto address = it->second;
-				if (address == "") return;
-
-				// Input select buttons.
-				if (button >= BUTTON_MIX && button <= BUTTON_EXT2)
-				{
-					if (button == BUTTON_MIX || currentInputButton == button)
-					{
-						address = "/anysolo";
-					}
-					else 
-					{
-						reaperOscSender.send("/anysolo", 1.0f);
-					}
-				}
-
-				// Special behaviour for automation read/write buttons, as REAPER has 4 different automation modes.
-				if (button == BUTTON_READ && isReadEnabled && isWriteEnabled)
-					reaperOscSender.send("/track/autowrite", 1.0f);
-				else if (button == BUTTON_READ && !isReadEnabled && isWriteEnabled)
-					reaperOscSender.send("/track/autotouch", 1.0f);
-				else if (button == BUTTON_READ && isReadEnabled && !isWriteEnabled)
-					reaperOscSender.send("/track/autotrim", 1.0f);
-				else if (button == BUTTON_READ && !isReadEnabled && !isWriteEnabled)
-					reaperOscSender.send("/track/autoread", 1.0f);
-				else if (button == BUTTON_WRITE && isReadEnabled && isWriteEnabled)
-					reaperOscSender.send("/track/autoread", 1.0f);
-				else if (button == BUTTON_WRITE && isReadEnabled && !isWriteEnabled)
-					reaperOscSender.send("/track/autotouch", 1.0f);
-				else if (button == BUTTON_WRITE && !isReadEnabled && isWriteEnabled)
-					reaperOscSender.send("/track/autotrim", 1.0f);
-				else if (button == BUTTON_WRITE && !isReadEnabled && !isWriteEnabled)
-					reaperOscSender.send("/track/autowrite", 1.0f);
-				else
-					reaperOscSender.send(address, 1.0f);
 			}
 		}
 	}
@@ -1035,14 +1038,11 @@ void DreamControlAudioProcessor::oscMessageReceived(const OSCMessage& message)
 			// Track volume fader.
 			midiOutput->sendBlockOfMessagesNow(MidiRPNGenerator::generate(1, 1, static_cast<int>(value * 16383), true, true));
 		}
-		else if (pattern == "/anysolo")
+		else if (pattern == "/anysolo" && value == 0.0f)
 		{
-			if (value == 0.0f)
-			{
-				midiOutput->sendMessageNow(MidiMessage::noteOn(1, BUTTON_MIX, 1.0f));
-				for (int btn = BUTTON_CUE1; btn <= BUTTON_EXT2; btn++)
-					midiOutput->sendMessageNow(MidiMessage::noteOn(1, btn, 0.0f));
-			}
+			midiOutput->sendMessageNow(MidiMessage::noteOn(1, BUTTON_MIX, 1.0f));
+			for (int btn = BUTTON_CUE1; btn <= BUTTON_EXT2; btn++)
+				midiOutput->sendMessageNow(MidiMessage::noteOn(1, btn, 0.0f));
 		}
 		else if (pattern == "/track/autotrim" && value == 1.0f)
 		{
