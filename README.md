@@ -1,6 +1,7 @@
 # DreamControl
 **Digital Audio Workstation (DAW) and Studio Monitor Control Surface**
 
+![DreamControl](https://i.ibb.co/LQ8KzfP/20181024-205458.jpg)
 ![DreamControl Front Panel](https://i.imgur.com/ogYC02I.png)
 
 **WORK IN PROGRESS! This README will be updated as I move ahead with the project. More detailed info (build photos etc) will go onto a blog at some point.**
